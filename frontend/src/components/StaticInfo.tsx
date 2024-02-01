@@ -19,7 +19,6 @@ export function StaticInfo() {
   const fetchData = async () => {
     try {
       await instance.get("api/product_info/").then((res) => {
-        console.log(res.data.data);
         setInfoData(res.data.data);
       });
     } catch (err) {

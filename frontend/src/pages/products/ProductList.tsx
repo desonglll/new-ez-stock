@@ -7,14 +7,18 @@ import {
   message,
   Pagination,
   PaginationProps,
+  Space,
   Spin,
   Table,
   TableColumnsType,
   Tag,
 } from "antd";
 import "bootstrap/dist/css/bootstrap.css";
-import {CheckCircleOutlined, CloseCircleOutlined, LoadingOutlined} from "@ant-design/icons";
-import ButtonGroup from "antd/es/button/button-group";
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 interface Product {
@@ -53,6 +57,7 @@ interface Result {
 export function ProductList() {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
@@ -76,7 +81,7 @@ export function ProductList() {
     offset: number,
     current_page: number,
   ) => {
-    try{
+    try {
       return await instance.get("/api/products/", {
         headers: headers,
         params: {
@@ -84,9 +89,8 @@ export function ProductList() {
           offset: offset * (current_page - 1),
         },
       });
-    }finally {
-      console.log(pageLoading)
-      setPageLoading(false)
+    } finally {
+      setPageLoading(false);
     }
   };
 
@@ -94,7 +98,6 @@ export function ProductList() {
     fetchData(limit, offset, current_page)
       .then((res) => {
         if (res.data) {
-          console.log(res);
           setResult(res.data);
           setProductList(res.data.results);
         }
@@ -108,11 +111,9 @@ export function ProductList() {
       .finally(() => {});
   };
   const handleEdit = (item: Product) => {
-    console.log(item);
     navigate(`/products/${item.pk}`);
   };
   const handleDelete = (item: Product) => {
-    console.log(item);
     instance
       .delete(`api/products/${item.pk}/delete/`, {
         headers: headers,
@@ -129,8 +130,6 @@ export function ProductList() {
   };
 
   const deleteSelected = () => {
-    console.log({ delete_list: selectedRowKeys });
-
     instance
       .delete("api/products/delete/", {
         data: { delete_list: selectedRowKeys }, // 将数据放入 data 属性
@@ -139,7 +138,13 @@ export function ProductList() {
       .then((res) => {
         if (res.data.status === "success") {
           console.log("success");
-          start();
+          setDeleteLoading(true);
+          // ajax request after empty completing
+          setTimeout(() => {
+            setSelectedRowKeys([]);
+            updateData(10, 0, 1);
+            setDeleteLoading(false);
+          }, 1000);
         }
       })
       .finally();
@@ -155,7 +160,6 @@ export function ProductList() {
   };
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
   const [current, setCurrent] = useState(1);
@@ -168,9 +172,7 @@ export function ProductList() {
     setCurrent(select_page);
     updateData(10, 10, select_page);
   };
-  const onShowSizeChange = (current: number, size: number) => {
-    console.log("current: ", current);
-    console.log("size: ", size);
+  const onShowPageSizeChange = (current: number, size: number) => {
     updateData(size, 0, current);
   };
 
@@ -211,7 +213,7 @@ export function ProductList() {
         },
       ],
       onFilter: (value: any, record) => record.is_in_stock === value,
-      width: 200,
+      width: 100,
     },
     {
       title: "Is Valid",
@@ -237,34 +239,22 @@ export function ProductList() {
         },
       ],
       onFilter: (value: any, record) => record.is_valid === value,
-      width: 200,
+      width: 100,
     },
     {
       title: "Actions",
       render: (_, record) => (
-        <ButtonGroup>
-          <Button
-            type={"primary"}
-            size={"middle"}
-            onClick={() => handleEdit(record)}
-          >
-            Edit pk: {record.pk}
-          </Button>
-          <Button
-            type={"primary"}
-            size={"middle"}
-            danger
-            onClick={() => handleDelete(record)}
-          >
-            Delete
-          </Button>
-        </ButtonGroup>
+        <Space size="middle">
+          <a onClick={() => handleEdit(record)}>Edited {record.pk}</a>
+          <a onClick={() => handleDelete(record)}>Delete</a>
+        </Space>
       ),
+      width: 200,
     },
   ];
 
   useEffect(() => {
-    updateData(10,0,1)
+    updateData(10, 0, 1);
   }, []);
 
   const handleAdd = () => {
@@ -274,7 +264,11 @@ export function ProductList() {
   return (
     <>
       {contextHolder}
-      <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} spinning={pageLoading} tip="Loading...">
+      <Spin
+        indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+        spinning={pageLoading}
+        tip="Loading..."
+      >
         {pageLoading ? (
           <div>loading</div>
         ) : (
@@ -292,12 +286,12 @@ export function ProductList() {
                 onClick={handleAdd}
               >
                 Add
-              </Button>{" "}
+              </Button>
               <Button
                 type="primary"
                 onClick={deleteSelected}
                 disabled={!hasSelected}
-                loading={loading}
+                loading={deleteLoading}
                 style={{ marginLeft: 8, marginRight: 8 }}
               >
                 Delete
@@ -315,13 +309,12 @@ export function ProductList() {
                 dataSource={productList}
                 rowKey={"pk"}
                 pagination={false}
-                style={{ marginBottom: 16 }}
               />
               <Pagination
                 showQuickJumper
                 showSizeChanger
-                onShowSizeChange={onShowSizeChange}
-                style={{ marginBottom: 16 }}
+                onShowSizeChange={onShowPageSizeChange}
+                style={{ marginTop: 20 }}
                 defaultCurrent={1}
                 current={current}
                 total={result.count}

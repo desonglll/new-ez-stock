@@ -1,8 +1,8 @@
 import ReactECharts from "echarts-for-react";
 import { Card } from "antd";
-import { StaticInfo } from "../components/StaticInfo.tsx";
+import { StaticInfo } from "../../components/StaticInfo.tsx";
 import { useEffect, useState } from "react";
-import { getProductInfo } from "../utils/products.ts";
+import { getProductInfo } from "../../utils/products.ts";
 
 const options = {
   grid: { top: 8, right: 8, bottom: 24, left: 36 },
@@ -25,7 +25,7 @@ const options = {
   },
 };
 
-export function Analyze() {
+export function ProductAnalyze() {
   const [productInfo, setProductInfo] = useState({
     categories_count: 0,
     product_attributes: [],
@@ -38,7 +38,6 @@ export function Analyze() {
     const fetchData = async () => {
       const product_info = await getProductInfo();
       setProductInfo(product_info.data);
-      console.log(product_info.data);
       const supplier_info = product_info.data.supplier_info.map(
         (item: {
           name: string;

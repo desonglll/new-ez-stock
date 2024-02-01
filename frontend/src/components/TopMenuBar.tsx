@@ -1,8 +1,8 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { AiOutlineDashboard } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { IoInformationCircleOutline } from "react-icons/io5";
 
@@ -38,6 +38,7 @@ const items: MenuProps["items"] = [
 ];
 
 export function TopMenuBar() {
+  const location = useLocation();
   const [current, setCurrent] = useState("mail");
   const navigate = useNavigate();
   const onClick: MenuProps["onClick"] = (e) => {
@@ -45,6 +46,11 @@ export function TopMenuBar() {
     setCurrent(e.key);
     navigate(e.key);
   };
+  useEffect(() => {
+    // 在组件初次渲染时设置 defaultSelectedKeys
+    const initialKey = location.pathname.split("/")[1];
+    setCurrent(initialKey);
+  }, [location.pathname]);
 
   return (
     <Fragment>
@@ -53,6 +59,7 @@ export function TopMenuBar() {
         selectedKeys={[current]}
         mode="horizontal"
         items={items}
+        defaultSelectedKeys={[current]}
       />
     </Fragment>
   );

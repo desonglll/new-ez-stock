@@ -23,5 +23,15 @@ export interface Product {
   dimensions: string | null;
   status: string;
   public: boolean;
-  edit_url:string//#
+  edit_url: string; //#
+}
+
+export interface Supplier {
+  key: React.Key;
+  pk: number;
+  user: number;
+  name: string;
+  contact_email: string | null;
+  contact_phone: string | null;
+  contact_person: string | null;
 }
