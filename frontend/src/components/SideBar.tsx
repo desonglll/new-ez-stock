@@ -4,6 +4,7 @@ import { HiTemplate } from "react-icons/hi";
 import { useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { FaPersonHiking } from "react-icons/fa6";
+import { BiCategory } from "react-icons/bi";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -59,26 +60,43 @@ const items: MenuProps["items"] = [
       "group",
     ),
   ]),
+  getItem("Categories", "sub3", <BiCategory />, [
+    getItem(
+      "Operations",
+      "g3",
+      null,
+      [
+        getItem("Category List", "categories"),
+        getItem("Add Category", "categories/add"),
+      ],
+      "group",
+    ),
+  ]),
 ];
 
 export const SideBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [current, setCurrent] = useState("");
+
   const onClick: MenuProps["onClick"] = (e) => {
     navigate(e.key);
     console.log(location.pathname.slice(1));
   };
+
   useEffect(() => {
     setCurrent(location.pathname.slice(1));
   }, [location.pathname]);
+
   return (
-    <Menu
-      onClick={onClick}
-      defaultOpenKeys={["sub1", "sub2"]}
-      mode="inline"
-      items={items}
-      selectedKeys={[current]}
-    />
+    <>
+      <Menu
+        onClick={onClick}
+        defaultOpenKeys={[]}
+        mode="inline"
+        items={items}
+        selectedKeys={[current]}
+      />
+    </>
   );
 };

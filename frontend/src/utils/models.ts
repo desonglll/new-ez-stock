@@ -35,3 +35,11 @@ export interface Supplier {
   contact_phone: string | null;
   contact_person: string | null;
 }
+
+export interface Category {
+  key: React.Key;
+  pk: number;
+  name: string;
+  user: number;
+  description: string;
+}

@@ -15,6 +15,9 @@ import { SupplierList } from "./suppliers/SupplierList.tsx";
 import { EditSupplier } from "./suppliers/EditSupplier.tsx";
 import { AddSupplier } from "./suppliers/AddSupplier.tsx";
 import { ComingSoon } from "./ComingSoon.tsx";
+import { CategoryList } from "./categories/CategoryList.tsx";
+import { EditCategory } from "./categories/EditCategory.tsx";
+import { AddCategory } from "./categories/AddCategory.tsx";
 
 export function Home() {
   const [collapsed, setCollapsed] = useState(false);
@@ -77,6 +80,9 @@ export function Home() {
               <Route path={"/suppliers"} Component={SupplierList}></Route>
               <Route path={"/suppliers/:pk"} Component={EditSupplier}></Route>
               <Route path={"/suppliers/add"} Component={AddSupplier}></Route>
+              <Route path={"/categories"} Component={CategoryList}></Route>
+              <Route path={"/categories/:pk"} Component={EditCategory}></Route>
+              <Route path={"/categories/add"} Component={AddCategory}></Route>
             </Routes>
           </Content>
         </Layout>
