@@ -60,6 +60,7 @@ export function TopMenuBar() {
         mode="horizontal"
         items={items}
         defaultSelectedKeys={[current]}
+        style={{ width: "80vw" }}
       />
     </Fragment>
   );

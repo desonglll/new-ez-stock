@@ -94,7 +94,7 @@ class ProductInfoAPIView(generics.GenericAPIView):
                 "pk": item.pk,
                 "user": item.user.id,
                 "name": item.name,
-                "product_count": item.product_count
+                "supplier_product_count": item.product_count
             })
         print(supplier_info)
 

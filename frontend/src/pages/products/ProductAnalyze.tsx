@@ -43,10 +43,10 @@ export function ProductAnalyze() {
           name: string;
           pk: number;
           user: string;
-          product_count: number;
+          supplier_product_count: number;
         }) => ({
           name: item.name,
-          value: item.product_count,
+          value: item.supplier_product_count,
         }),
       );
       setSupplierInfo(supplier_info);

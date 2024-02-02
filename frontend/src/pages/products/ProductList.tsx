@@ -293,6 +293,7 @@ export function ProductList() {
                 disabled={!hasSelected}
                 loading={deleteLoading}
                 style={{ marginLeft: 8, marginRight: 8 }}
+                danger={true}
               >
                 Delete
                 <span style={{ marginLeft: 8 }}>

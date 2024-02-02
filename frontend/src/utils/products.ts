@@ -38,6 +38,7 @@ export const getProductInfo = async () => {
     const response = await instance.get("api/product_info/", {
       headers: get_headers(),
     });
+    console.log(response.data);
     return response.data;
   } catch (err: any) {
     console.log(err as AxiosError);

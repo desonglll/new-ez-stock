@@ -60,6 +60,8 @@ const items: MenuProps["items"] = [
       "group",
     ),
   ]),
+  { type: "divider" },
+
   getItem("Categories", "sub3", <BiCategory />, [
     getItem(
       "Operations",
