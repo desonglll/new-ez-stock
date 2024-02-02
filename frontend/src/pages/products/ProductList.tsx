@@ -333,7 +333,7 @@ export function ProductList() {
                                 }}>
                                 <FormItem name={"searchField"}>
                                     <div>
-                                        <Input style={{width: 200, marginTop:18,marginRight:18}}/>
+                                        <Input style={{width: 200, marginTop: 18, marginRight: 18}}/>
                                         <Button htmlType={"submit"}>Search</Button>
                                     </div>
                                 </FormItem>
