@@ -14,8 +14,9 @@ from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
 
 from api.mixins import UserQuerySetMixin, StaffEditorPermissionMixin
+from api.serializers import ProductAttributeSerializer
 from products.serializers import ProductSerializer
-from products.models import Product
+from products.models import Product, ProductAttribute
 from rest_framework import generics, status
 from api.models import Result
 
@@ -204,3 +205,67 @@ class ProductDestroyMultipleAPIView(
 
 
 product_destroy_multiple_view = ProductDestroyMultipleAPIView.as_view()
+
+
+class ProductAttributeDetailAPIView(generics.RetrieveAPIView):
+    queryset = ProductAttribute.objects.all()
+    serializer_class = ProductAttributeSerializer
+
+
+product_attribute_detail_view = ProductAttributeDetailAPIView.as_view()
+
+
+class ProductAttributeListCreatAPIView(generics.ListCreateAPIView):
+    """
+    API View 用于获取和创建产品属性列表。
+
+    - GET 请求返回包含所有产品属性的 JSON 数据。
+    - POST 请求用于创建新的产品属性。
+
+    Attributes:
+        - `queryset`: 包含所有产品属性的查询集
+        - `serializer_class`: 使用的产品属性序列化器
+    """
+    queryset = ProductAttribute.objects.all()
+    serializer_class = ProductAttributeSerializer
+
+    def list(self, request, *args, **kwargs):
+        """
+        List a queryset.
+        """
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        data = serializer.data
+
+        # 构建标准的JSON返回格式
+        result = Result(status='success', message='Product Attribute retrieved successfully', data=data)
+
+        # 返回JSON响应
+        return JsonResponse(result.to_json(), status=200)
+
+
+product_attribute_list_create_view = ProductAttributeListCreatAPIView.as_view()
+
+
+class ProductAttributeUpdateAPIView(generics.UpdateAPIView):
+    queryset = ProductAttribute.objects.all()
+    serializer_class = ProductAttributeSerializer
+    lookup_field = "pk"
+
+
+product_attribute_update_view = ProductAttributeUpdateAPIView.as_view()
+
+
+class ProductAttributeDestroyAPIView(generics.DestroyAPIView):
+    queryset = ProductAttribute.objects.all()
+    serializer_class = ProductAttributeSerializer
+    lookup_field = "pk"
+
+
+product_attribute_destroy_view = ProductAttributeDestroyAPIView.as_view()

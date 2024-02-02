@@ -28,7 +28,6 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     # URL 模式用于获取和创建商品属性信息
-    path("product_attributes/", views.product_attribute_list_create_view, name="product_attribute_list_create"),
     # URL 模式用于获取商品详细信息
     path("product_info/", views.product_info_view, name="product_info_view"),
     path('auth/', obtain_auth_token),

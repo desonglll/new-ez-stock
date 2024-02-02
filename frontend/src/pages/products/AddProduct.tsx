@@ -18,7 +18,7 @@ import {
   Image,
 } from "antd";
 import { useEffect, useState } from "react";
-import { getProductAttributes } from "../../utils/products.ts";
+import { get_product_attributes } from "../../utils/products.ts";
 import "bootstrap/dist/css/bootstrap.css";
 import { getSuppliers } from "../../utils/suppliers.ts";
 import axios from "axios";
@@ -106,7 +106,7 @@ export const AddProduct = () => {
         /**
          * Get products attributes
          */
-        const productAttrResponseData = await getProductAttributes();
+        const productAttrResponseData = await get_product_attributes();
         const product_attr = productAttrResponseData.map(
           (item: { name: string; pk: number; value: string }) => ({
             label: item.name,

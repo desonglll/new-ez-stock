@@ -19,7 +19,7 @@ import {
   UploadProps,
 } from "antd";
 import { useEffect, useState } from "react";
-import { getProductAttributes, getProductByPk } from "../../utils/products.ts";
+import { get_product_attributes, getProductByPk } from "../../utils/products.ts";
 import { Product } from "../../utils/models.ts";
 import "bootstrap/dist/css/bootstrap.css";
 import { getSuppliers } from "../../utils/suppliers.ts";
@@ -167,7 +167,7 @@ export const EditProduct = () => {
         /**
          * Get products attributes
          */
-        const productAttrResponseData = await getProductAttributes();
+        const productAttrResponseData = await get_product_attributes();
         const product_attr = productAttrResponseData.map(
           (item: { name: string; pk: number; value: string }) => ({
             label: item.name,
