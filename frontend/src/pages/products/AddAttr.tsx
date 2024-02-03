@@ -27,7 +27,7 @@ export const AddAttr = () => {
                 duration: 1.5,
             })
             .then(() => {
-                navigate("/products-attr");
+                navigate("/warehouse/products-attr");
             });
     };
     return (

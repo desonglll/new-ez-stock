@@ -39,7 +39,7 @@ export const AttrList = () => {
 
 
     const handleEdit = (record: ProductAttribute) => {
-        navigate(`/products-attr/${record.pk}/`)
+        navigate(`/warehouse/products-attr/${record.pk}/`)
     }
     const handleDelete = (record: ProductAttribute) => {
         console.log(record)
@@ -75,7 +75,7 @@ export const AttrList = () => {
                     <Card>
                         <div>
                             <Button style={{marginBottom: 18}} onClick={() => {
-                                navigate("/products-attr/add")
+                                navigate("/warehouse/products-attr/add")
                             }}>Add</Button>
                         </div>
                         <Table dataSource={attributes} columns={columns} rowKey={"pk"}/>

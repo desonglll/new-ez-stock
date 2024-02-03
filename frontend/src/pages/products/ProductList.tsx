@@ -133,7 +133,7 @@ export function ProductList() {
             });
     };
     const handleEdit = (item: Product) => {
-        navigate(`/products/${item.pk}`);
+        navigate(`/warehouse/products/${item.pk}`);
     };
     const handleDelete = (item: Product) => {
         instance

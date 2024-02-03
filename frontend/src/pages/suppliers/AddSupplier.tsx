@@ -27,7 +27,7 @@ export const AddSupplier = () => {
         duration: 1.5,
       })
       .then(() => {
-        navigate("/suppliers");
+        navigate("/warehouse/suppliers");
       });
   };
   return (

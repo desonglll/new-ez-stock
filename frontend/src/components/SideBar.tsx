@@ -26,64 +26,71 @@ function getItem(
 
 const items: MenuProps["items"] = [
     getItem("Products", "sub1", <HiTemplate/>, [
-        getItem(
-            "Data",
-            "g1",
-            null,
-            [
-                getItem("Analyze", "products/analyze"),
-                getItem("Coming soon", "coming"),
-            ],
-            "group",
-        ),
-        getItem(
-            "Operations",
-            "g2",
-            null,
-            [
-                getItem("Product List", "products"),
-                getItem("Add Product", "products/add"),
-            ],
-            "group",
-        ),
-        getItem(
-            "Attributes",
-            "g3",
-            null,
-            [
-                getItem("Product Attributes", "products-attr"),
-                getItem("Add Attribute", "products-attr/add"),
-            ],
-            "group",
-        ),
+        getItem("Product List", "products"),
+        getItem("Attributes", "products-attr")
     ]),
-    {type: "divider"},
-    getItem("Suppliers", "sub2", <FaPersonHiking/>, [
-        getItem(
-            "Operations",
-            "g4",
-            null,
-            [
-                getItem("Supplier List", "suppliers"),
-                getItem("Add Supplier", "suppliers/add"),
-            ],
-            "group",
-        ),
-    ]),
-    {type: "divider"},
+    getItem("Suppliers", "suppliers", <FaPersonHiking/>),
+    getItem("Categories", "categories", <BiCategory/>)
 
-    getItem("Categories", "sub3", <BiCategory/>, [
-        getItem(
-            "Operations",
-            "g5",
-            null,
-            [
-                getItem("Category List", "categories"),
-                getItem("Add Category", "categories/add"),
-            ],
-            "group",
-        ),
-    ]),
+    // getItem("Products", "sub1", <HiTemplate/>, [
+    //     getItem(
+    //         "Data",
+    //         "g1",
+    //         null,
+    //         [
+    //             getItem("Analyze", "products/analyze"),
+    //             getItem("Coming soon", "coming"),
+    //         ],
+    //         "group",
+    //     ),
+    //     getItem(
+    //         "Operations",
+    //         "g2",
+    //         null,
+    //         [
+    //             getItem("Product List", "products"),
+    //             getItem("Add Product", "products/add"),
+    //         ],
+    //         "group",
+    //     ),
+    //     getItem(
+    //         "Attributes",
+    //         "g3",
+    //         null,
+    //         [
+    //             getItem("Product Attributes", "products-attr"),
+    //             getItem("Add Attribute", "products-attr/add"),
+    //         ],
+    //         "group",
+    //     ),
+    // ]),
+    // {type: "divider"},
+    // getItem("Suppliers", "sub2", <FaPersonHiking/>, [
+    //     getItem(
+    //         "Operations",
+    //         "g4",
+    //         null,
+    //         [
+    //             getItem("Supplier List", "suppliers"),
+    //             getItem("Add Supplier", "suppliers/add"),
+    //         ],
+    //         "group",
+    //     ),
+    // ]),
+    // {type: "divider"},
+    //
+    // getItem("Categories", "sub3", <BiCategory/>, [
+    //     getItem(
+    //         "Operations",
+    //         "g5",
+    //         null,
+    //         [
+    //             getItem("Category List", "categories"),
+    //             getItem("Add Category", "categories/add"),
+    //         ],
+    //         "group",
+    //     ),
+    // ]),
 ];
 
 export const SideBar = () => {
@@ -96,7 +103,8 @@ export const SideBar = () => {
     };
 
     useEffect(() => {
-        setCurrent(location.pathname.slice(1));
+        console.log(location.pathname.slice(11))
+        setCurrent(location.pathname.slice(11));
     }, [location.pathname]);
 
     return (
