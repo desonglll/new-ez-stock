@@ -93,7 +93,6 @@ export const SideBar = () => {
 
     const onClick: MenuProps["onClick"] = (e) => {
         navigate(e.key);
-        console.log(location.pathname.slice(1));
     };
 
     useEffect(() => {

@@ -58,7 +58,9 @@ export const AddAttr = () => {
                         </Row>
                         <Row>
                             <Col span={18}>
-                                <Form.Item name={"value"} label={"Value"}>
+                                <Form.Item name={"value"} label={"Value"} rules={[
+                                    {required: true, message: "Please enter the value!"},
+                                ]}>
                                     <Input/>
                                 </Form.Item>
                             </Col>

@@ -30,7 +30,6 @@ export const EditAttr = () => {
     useEffect(() => {
         const fetchData = async () => {
             const res = await get_product_attribute_by_pk(Number(pk))
-            console.log(res)
             setAttribute(res)
         }
         fetchData().then().finally(() => {
@@ -68,10 +67,14 @@ export const EditAttr = () => {
                                 }}
                                 onFinish={onFinish}
                             >
-                                <FormItem name={"name"} label={"Name"}>
+                                <FormItem name={"name"} label={"Name"} rules={[
+                                    {required: true, message: "Please enter the name!"},
+                                ]}>
                                     <Input/>
                                 </FormItem>
-                                <FormItem name={"value"} label={"Value"}>
+                                <FormItem name={"value"} label={"Value"} rules={[
+                                    {required: true, message: "Please enter the value!"},
+                                ]}>
                                     <Input/>
                                 </FormItem>
                                 <FormItem>

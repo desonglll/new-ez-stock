@@ -1,4 +1,4 @@
-import {message, Space, Table, TableColumnsType} from "antd";
+import {Button, Card, message, Space, Spin, Table, TableColumnsType} from "antd";
 import {useEffect, useState} from "react";
 import {ProductAttribute} from "../../utils/models.ts";
 import {get_product_attributes} from "../../utils/products.ts";
@@ -12,7 +12,7 @@ export const AttrList = () => {
     const navigate = useNavigate()
     const instance = axios.create()
     const [messageApi, contextHolder] = message.useMessage();
-
+    const [loadingPage, setLoadingPage] = useState(true);
     const columns: TableColumnsType<ProductAttribute> = [
         {
             title: 'Name',
@@ -39,7 +39,6 @@ export const AttrList = () => {
 
 
     const handleEdit = (record: ProductAttribute) => {
-        console.log(record)
         navigate(`/products-attr/${record.pk}/`)
     }
     const handleDelete = (record: ProductAttribute) => {
@@ -62,12 +61,28 @@ export const AttrList = () => {
             const res = await get_product_attributes()
             setAttributes(res)
         }
-        fetchData().then()
+        fetchData().then().finally(() => {
+            setLoadingPage(!loadingPage)
+        })
     }, []);
     return (
         <>
             {contextHolder}
-            <Table dataSource={attributes} columns={columns} rowKey={"pk"}/>
+            <Spin spinning={loadingPage}>
+                {loadingPage ? (
+                    <div>Loading</div>
+                ) : (
+                    <Card>
+                        <div>
+                            <Button style={{marginBottom: 18}} onClick={() => {
+                                navigate("/products-attr/add")
+                            }}>Add</Button>
+                        </div>
+                        <Table dataSource={attributes} columns={columns} rowKey={"pk"}/>
+                    </Card>
+
+                )}
+            </Spin>
         </>
     );
 };
