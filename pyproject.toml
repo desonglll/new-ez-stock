@@ -6,7 +6,7 @@ authors = ["desonglll <lindesong666@163.com>"]
 readme = "README.md"
 
 [tool.poetry.scripts]
-django = "manage:main"
+django = "src.manage:main"
 
 [tool.poetry.dependencies]
 python = "^3.11"
