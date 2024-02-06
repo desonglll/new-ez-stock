@@ -221,6 +221,14 @@ export const AddProduct = () => {
                                                 // onChange={handleChange}
                                                 style={{width: "100%"}}
                                                 options={categories}
+                                                onSearch={(value: string) => {
+                                                    console.log('search:', value);
+                                                }}
+                                                filterOption={(input: string, option?: {
+                                                    label: string;
+                                                    value: string
+                                                }) =>
+                                                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
                                             />
                                         </Form.Item>
                                     </Col>
@@ -233,14 +241,31 @@ export const AddProduct = () => {
                                                 // onChange={handleChange}
                                                 style={{width: "100%"}}
                                                 options={productAttr}
+                                                onSearch={(value: string) => {
+                                                    console.log('search:', value);
+                                                }}
+                                                filterOption={(input: string, option?: {
+                                                    label: string;
+                                                    value: string
+                                                }) =>
+                                                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
                                             />
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <Row gutter={16}>
+                                <Row>
                                     <Col span={12}>
                                         <Form.Item name={"supplier"} label="Supplier">
-                                            <Select>
+                                            <Select
+                                                onSearch={(value: string) => {
+                                                    console.log('search:', value);
+                                                }}
+                                                filterOption={(input: string, option?: {
+                                                    label: string;
+                                                    value: string
+                                                }) =>
+                                                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
+                                            >
                                                 {suppliers.map((item: { pk: string; name: string }) => (
                                                     <Select.Option key={item.pk} value={item.pk}>
                                                         {item.name}
