@@ -218,7 +218,7 @@ export const AddProduct = () => {
                                                 mode="multiple"
                                                 size={"middle"}
                                                 placeholder="Please select"
-                                                // onChange={handleChange}
+                                                showSearch={true}
                                                 style={{width: "100%"}}
                                                 options={categories}
                                                 onSearch={(value: string) => {
@@ -238,7 +238,7 @@ export const AddProduct = () => {
                                                 mode="multiple"
                                                 size={"middle"}
                                                 placeholder="Please select"
-                                                // onChange={handleChange}
+                                                showSearch={true}
                                                 style={{width: "100%"}}
                                                 options={productAttr}
                                                 onSearch={(value: string) => {
@@ -257,6 +257,7 @@ export const AddProduct = () => {
                                     <Col span={12}>
                                         <Form.Item name={"supplier"} label="Supplier">
                                             <Select
+                                                showSearch={true}
                                                 onSearch={(value: string) => {
                                                     console.log('search:', value);
                                                 }}

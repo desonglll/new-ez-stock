@@ -12,6 +12,7 @@ class Category(models.Model):
     user = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=255, unique=True, verbose_name='分类名称', default=UNCLASSIFIED)
     description = models.TextField(blank=True, null=True, verbose_name='分类描述')
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         verbose_name = '分类'

@@ -144,3 +144,17 @@ class CategoryDestroyAPIView(generics.DestroyAPIView):
 
 
 category_destroy_view = CategoryDestroyAPIView.as_view()
+
+
+def get_parent_categories(request):
+    data = Category.objects.filter(parent=None)
+    serializer = CategorySerializer(data, many=True)
+    result = Result(status="success", message="CategoryParent", data=serializer.data)
+    return JsonResponse(result.to_json(), status=200)
+
+
+def get_sub_categories(request):
+    data = Category.objects.filter(parent__isnull=False)
+    serializer = CategorySerializer(data, many=True)
+    result = Result(status="success", message="CategorySub", data=serializer.data)
+    return JsonResponse(result.to_json(), status=200)

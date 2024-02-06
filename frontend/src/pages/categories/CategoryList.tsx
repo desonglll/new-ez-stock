@@ -1,4 +1,4 @@
-import {Button, Card, message, Space, Spin, Table, TableProps} from "antd";
+import {Button, Card, message, Space, Spin, Table, TableProps, Tag} from "antd";
 import * as React from "react";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
@@ -6,6 +6,7 @@ import axios from "axios";
 import {get_headers} from "../../utils/basic.ts";
 import {Category} from "../../utils/models.ts";
 import {getCategories} from "../../utils/categories.ts";
+import {CheckCircleOutlined, CloseCircleOutlined} from "@ant-design/icons";
 
 export const CategoryList = () => {
     const navigate = useNavigate();
@@ -43,6 +44,36 @@ export const CategoryList = () => {
             dataIndex: "name",
         },
         {
+            title: "is Parent",
+            dataIndex: "parent",
+            render: (_, record) =>
+                record.parent === null ? (
+                    <Tag icon={<CheckCircleOutlined/>} color="success">
+                        Parent
+                    </Tag>
+                ) : (
+                    <Tag icon={<CloseCircleOutlined/>} color="error">
+                        Not Parent
+                    </Tag>
+                ),
+            filters: [
+                {
+                    text: "P",
+                    value: true,
+                },
+                {
+                    text: "NP",
+                    value: false,
+                },
+            ],
+            onFilter: (value: any, record) => {
+                if (value === true)
+                    return record.parent === null
+                else
+                    return record.parent != null
+            }
+        },
+        {
             title: "Action",
             key: "action",
             render: (_, record) => (
@@ -64,9 +95,11 @@ export const CategoryList = () => {
     useEffect(() => {
         const fetchData = async () => {
             const categories_data = await getCategories();
+            console.log(categories_data)
             const data: Category[] = categories_data.map((item: Category) => ({
                 pk: item.pk,
                 name: item.name,
+                parent: item.parent
             }));
             setCategoryData(data);
         };

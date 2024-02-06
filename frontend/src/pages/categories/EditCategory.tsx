@@ -1,5 +1,5 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {Button, Card, Col, Form, Input, message, Row, Spin} from "antd";
+import {Button, Card, Col, Form, Input, message, Row, Select, Spin} from "antd";
 import {useEffect, useState} from "react";
 import {Category} from "../../utils/models.ts";
 import {LoadingOutlined} from "@ant-design/icons";
@@ -14,9 +14,19 @@ export const EditCategory = () => {
     const [category, setCategory] = useState<Category>();
     const navigate = useNavigate();
     const [messageApi, contextHolder] = message.useMessage();
+    const [parentSelections, setParentSelections] = useState([]);
     useEffect(() => {
         const fetchData = async (pk: number) => {
             const res = await get_category_by_pk(pk);
+            const parentData = await instance.get("api/categories/get_parent/")
+            const parent = parentData.data.data.map((item: { pk: number; name: string; }) => ({
+                    value: item.pk,
+                    label: item.name
+                }
+            ))
+            console.log(parent)
+            setParentSelections(parent)
+            console.log(res)
             setCategory(res);
         };
         fetchData(Number(pk))
@@ -62,6 +72,7 @@ export const EditCategory = () => {
                         initialValues={{
                             name: category?.name,
                             description: category?.description,
+                            parent: category?.parent
                         }}
                         labelCol={{span: 9}}
                         onFinish={(data) => handleSubmit(data)}
@@ -92,6 +103,15 @@ export const EditCategory = () => {
                                     <Col span={18}>
                                         <Form.Item name={"description"} label={"Description"}>
                                             <Input/>
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col span={18}>
+                                        <Form.Item name={"parent"} label={"Parent Name"}>
+                                            <Select
+                                                options={parentSelections}
+                                            />
                                         </Form.Item>
                                     </Col>
                                 </Row>

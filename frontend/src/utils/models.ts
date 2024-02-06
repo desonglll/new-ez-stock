@@ -42,6 +42,8 @@ export interface Category {
     name: string;
     user: number;
     description: string;
+    parent: number;
+    parent_name: string
 }
 
 export interface ProductAttribute {

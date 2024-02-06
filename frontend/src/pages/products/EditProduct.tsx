@@ -24,7 +24,6 @@ import {Product} from "../../utils/models.ts";
 import "bootstrap/dist/css/bootstrap.css";
 import {getSuppliers} from "../../utils/suppliers.ts";
 import axios from "axios";
-import {getCategories} from "../../utils/categories.ts";
 import {
     CheckOutlined,
     CloseOutlined,
@@ -150,8 +149,8 @@ export const EditProduct = () => {
                 /**
                  * Get categories selection
                  */
-                const cateResponseData = await getCategories();
-                const cate = cateResponseData.map(
+                const cateResponseData = await instance.get("api/categories/get_sub/");
+                const cate = cateResponseData.data.data.map(
                     (item: {
                         pk: number;
                         user: number;
@@ -192,7 +191,7 @@ export const EditProduct = () => {
      * Form submit to backend api
      * @param val
      */
-    const onFormFinish = (val: any) => {
+    const onFormFinish = (val: Product) => {
         val["image"] = imageURL;
         console.log(val);
         instance
@@ -204,7 +203,7 @@ export const EditProduct = () => {
                 success();
             });
     };
-    const normFile = (e: any) => {
+    const normFile = (e) => {
         console.log("Upload event:", e);
         if (Array.isArray(e)) {
             return e;
@@ -310,6 +309,7 @@ export const EditProduct = () => {
                                                 size={"middle"}
                                                 placeholder="Please select"
                                                 // onChange={handleChange}
+                                                showSearch={true}
                                                 style={{width: "100%"}}
                                                 options={categories}
                                                 onSearch={(value: string) => {
@@ -349,6 +349,7 @@ export const EditProduct = () => {
                                     <Col span={12}>
                                         <Form.Item name={"supplier"} label="Supplier">
                                             <Select
+                                                showSearch={true}
                                                 onSearch={(value: string) => {
                                                     console.log('search:', value);
                                                 }}
