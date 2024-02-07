@@ -1,4 +1,4 @@
-import {Button, Card, Col, Form, Input, message, Row, Select} from "antd";
+import {Button, Card, Col, Form, Input, message, Row, Select, Switch} from "antd";
 import {Category} from "../../utils/models.ts";
 import axios from "axios";
 import {get_headers} from "../../utils/basic.ts";
@@ -10,6 +10,7 @@ export const AddCategory = () => {
     const navigate = useNavigate();
     const instance = axios.create()
     const [parentSelections, setParentSelections] = useState([]);
+    const [isParent, setIsParent] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             const parentData = await instance.get("api/categories/get_parent/")
@@ -81,13 +82,27 @@ export const AddCategory = () => {
                         </Row>
                         <Row>
                             <Col span={18}>
-                                <Form.Item name={"parent"} label={"Parent Name"}>
-                                    <Select
-                                        options={parentSelections}
-                                    />
+                                <Form.Item name={"is_parent"} label={"Is Parent"}>
+                                    <Switch onChange={() => {
+                                        setIsParent(!isParent)
+                                    }}/>
                                 </Form.Item>
                             </Col>
                         </Row>
+                        {!isParent ? (
+                            <Row>
+                                <Col span={18}>
+                                    <Form.Item name={"parent"} label={"Parent Name"}>
+                                        <Select
+                                            options={parentSelections}
+                                        />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+
+                        ) : (
+                            <div></div>
+                        )}
                         <Row>
                             <Col>
                                 <Form.Item>

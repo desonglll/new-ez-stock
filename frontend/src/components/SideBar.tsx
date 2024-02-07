@@ -26,71 +26,16 @@ function getItem(
 
 const items: MenuProps["items"] = [
     getItem("Products", "sub1", <HiTemplate/>, [
-        getItem("Product List", "products"),
-        getItem("Attributes", "products-attr")
+        getItem("Product List", "/warehouse/products"),
+        getItem("Attributes", "/warehouse/products-attr")
     ]),
-    getItem("Suppliers", "suppliers", <FaPersonHiking/>),
-    getItem("Categories", "categories", <BiCategory/>)
-
-    // getItem("Products", "sub1", <HiTemplate/>, [
-    //     getItem(
-    //         "Data",
-    //         "g1",
-    //         null,
-    //         [
-    //             getItem("Analyze", "products/analyze"),
-    //             getItem("Coming soon", "coming"),
-    //         ],
-    //         "group",
-    //     ),
-    //     getItem(
-    //         "Operations",
-    //         "g2",
-    //         null,
-    //         [
-    //             getItem("Product List", "products"),
-    //             getItem("Add Product", "products/add"),
-    //         ],
-    //         "group",
-    //     ),
-    //     getItem(
-    //         "Attributes",
-    //         "g3",
-    //         null,
-    //         [
-    //             getItem("Product Attributes", "products-attr"),
-    //             getItem("Add Attribute", "products-attr/add"),
-    //         ],
-    //         "group",
-    //     ),
-    // ]),
-    // {type: "divider"},
-    // getItem("Suppliers", "sub2", <FaPersonHiking/>, [
-    //     getItem(
-    //         "Operations",
-    //         "g4",
-    //         null,
-    //         [
-    //             getItem("Supplier List", "suppliers"),
-    //             getItem("Add Supplier", "suppliers/add"),
-    //         ],
-    //         "group",
-    //     ),
-    // ]),
-    // {type: "divider"},
-    //
-    // getItem("Categories", "sub3", <BiCategory/>, [
-    //     getItem(
-    //         "Operations",
-    //         "g5",
-    //         null,
-    //         [
-    //             getItem("Category List", "categories"),
-    //             getItem("Add Category", "categories/add"),
-    //         ],
-    //         "group",
-    //     ),
-    // ]),
+    getItem("Suppliers", "/warehouse/suppliers", <FaPersonHiking/>),
+    getItem("Categories", "categories", <BiCategory/>,
+        [
+            getItem("Parents", "/warehouse/categories/parents", <BiCategory/>),
+            getItem("SubCate", "/warehouse/categories/sub", <BiCategory/>)
+        ]
+    )
 ];
 
 export const SideBar = () => {

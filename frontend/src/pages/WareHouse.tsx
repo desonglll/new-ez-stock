@@ -20,6 +20,8 @@ import {AttrList} from "./products/AttrList.tsx";
 import {EditAttr} from "./products/EditAttr.tsx";
 import {AddAttr} from "./products/AddAttr.tsx";
 import {MdTableRows} from "react-icons/md";
+import {CategoryParentList} from "./categories/CategoryParentList.tsx";
+import {CategorySubList} from "./categories/CategorySubList.tsx";
 
 export function WareHouse() {
     const [collapsed, setCollapsed] = useState(false);
@@ -75,6 +77,8 @@ export function WareHouse() {
                         <Route path={"/categories"} Component={CategoryList}></Route>
                         <Route path={"/categories/:pk"} Component={EditCategory}></Route>
                         <Route path={"/categories/add"} Component={AddCategory}></Route>
+                        <Route path={"/categories/parents"} Component={CategoryParentList}></Route>
+                        <Route path={"/categories/sub"} Component={CategorySubList}></Route>
                     </Routes>
                 </Content>
             </Layout>

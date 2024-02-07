@@ -106,7 +106,7 @@ export const EditProduct = () => {
                 setImagePreviewURL(event.file.response.image_url);
                 success();
             } else {
-                console.error("Unexpected response structure:", event);
+                console.log(event)
             }
         },
     };
@@ -203,7 +203,7 @@ export const EditProduct = () => {
                 success();
             });
     };
-    const normFile = (e) => {
+    const normFile = (e: any) => {
         console.log("Upload event:", e);
         if (Array.isArray(e)) {
             return e;

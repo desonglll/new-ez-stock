@@ -52,3 +52,13 @@ export interface ProductAttribute {
     name: string,
     value: string
 }
+
+export interface News {
+    key: React.Key,
+    author: number,
+    content: string,
+    date: string,
+    id: number,
+    pub_date: string,
+    title: string,
+}

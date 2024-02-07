@@ -106,15 +106,19 @@ export const EditCategory = () => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <Row>
-                                    <Col span={18}>
-                                        <Form.Item name={"parent"} label={"Parent Name"}>
-                                            <Select
-                                                options={parentSelections}
-                                            />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                                {category?.parent === null ? (
+                                    <div></div>
+                                ) : (
+                                    <Row>
+                                        <Col span={18}>
+                                            <Form.Item name={"parent"} label={"Parent Name"}>
+                                                <Select
+                                                    options={parentSelections}
+                                                />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                )}
                                 <Row>
                                     <Col>
                                         <Form.Item>

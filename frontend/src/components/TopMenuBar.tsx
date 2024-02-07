@@ -3,21 +3,21 @@ import type {MenuProps} from "antd";
 import {Menu} from "antd";
 import {useLocation, useNavigate} from "react-router-dom";
 import {FaRegCircleUser} from "react-icons/fa6";
-import {IoHomeOutline, IoInformationCircleOutline} from "react-icons/io5";
+import {IoInformationCircleOutline} from "react-icons/io5";
 import {LuWarehouse} from "react-icons/lu";
+import {FaRegNewspaper} from "react-icons/fa";
 
 const items: MenuProps["items"] = [
-    {
-        label: "Home",
-        key: "/",
-        icon: <IoHomeOutline/>,
-    },
     {
         label: "WareHouse",
         key: "warehouse",
         icon: <LuWarehouse/>,
     },
-
+    {
+        label: "News",
+        key: "news",
+        icon: <FaRegNewspaper/>,
+    },
     {
         label: "User",
         key: "user",
