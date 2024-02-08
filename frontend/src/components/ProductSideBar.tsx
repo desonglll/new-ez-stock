@@ -38,7 +38,7 @@ const items: MenuProps["items"] = [
     )
 ];
 
-export const SideBar = () => {
+export const ProductSideBar = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [current, setCurrent] = useState("");
@@ -48,8 +48,8 @@ export const SideBar = () => {
     };
 
     useEffect(() => {
-        console.log(location.pathname.slice(11))
-        setCurrent(location.pathname.slice(11));
+        console.log(location.pathname)
+        setCurrent(location.pathname);
     }, [location.pathname]);
 
     return (

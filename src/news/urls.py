@@ -15,5 +15,6 @@ from . import views
 
 urlpatterns = [
     path("", views.get_all_news),
+    path("add/", views.news_list_create_view),
     path('<int:pk>/', views.get_news_by_pk),
 ]

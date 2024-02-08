@@ -11,5 +11,9 @@ class News(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL, verbose_name='Author')
 
+    class Meta:
+        verbose_name = '新闻'
+        verbose_name_plural = '新闻'
+
     def __str__(self):
         return self.title

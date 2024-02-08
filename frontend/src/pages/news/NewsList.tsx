@@ -1,8 +1,8 @@
-import {Card, Space, Spin, Table, TableProps} from "antd";
+import {Button, Card, Space, Spin, Table, TableProps} from "antd";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {get_headers} from "../utils/basic.ts";
-import {News} from "../utils/models.ts";
+import {get_headers} from "../../utils/basic.ts";
+import {News} from "../../utils/models.ts";
 import {useNavigate} from "react-router-dom";
 
 
@@ -65,6 +65,10 @@ export function NewsList() {
         setLoading(!loading)
 
     }, []);
+    const handleAdd = () => {
+        console.log("Click")
+        navigate("/news/add/")
+    }
     return (
         <>
             <Spin spinning={loading}>
@@ -72,6 +76,11 @@ export function NewsList() {
                     <div>Loading</div>
                 ) : (
                     <Card>
+                        <div style={{marginBottom: 18}}>
+                            <Button onClick={handleAdd}>
+                                Add
+                            </Button>
+                        </div>
                         <Table
                             columns={columns}
                             dataSource={newsList}

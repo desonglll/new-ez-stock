@@ -1,7 +1,7 @@
 import {Button, Layout} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Content,} from "antd/es/layout/layout";
-import {SideBar} from "../components/SideBar.tsx";
+import {ProductSideBar} from "../components/ProductSideBar.tsx";
 import {ProductList} from "./products/ProductList.tsx";
 import {useEffect, useState} from "react";
 import {Route, Routes, useNavigate} from "react-router-dom";
@@ -44,7 +44,6 @@ export function WareHouse() {
                         display: "flex",
                         flexDirection: "column"
                     }}
-                    collapsed={collapsed}
                 >
                     <Button onClick={() => {
                         setCollapsed(!collapsed)
@@ -53,7 +52,7 @@ export function WareHouse() {
                                 width: "100%"
                             }}><MdTableRows/>
                     </Button>
-                    <SideBar/>
+                    <ProductSideBar/>
 
                 </Sider>
                 <Content>

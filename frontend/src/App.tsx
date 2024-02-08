@@ -9,8 +9,7 @@ import {Layout} from "antd";
 import {Dashboard} from "./pages/Dashboard.tsx";
 import {User} from "./pages/User.tsx";
 import {About} from "./pages/About.tsx";
-import {NewsList} from "./pages/NewsList.tsx";
-import {NewsDetail} from "./pages/news/NewsDetail.tsx";
+import {NewsHouse} from "./pages/NewsHouse.tsx";
 
 
 function App() {
@@ -38,8 +37,7 @@ function App() {
                     <Route path={"/"} Component={WareHouse}></Route>
                     <Route path={"/warehouse/*"} Component={WareHouse}></Route>
                     <Route path={"/dashboard/*"} Component={Dashboard}></Route>
-                    <Route path={"/news/*"} Component={NewsList}></Route>
-                    <Route path={"/news/:id/"} Component={NewsDetail}></Route>
+                    <Route path={"/news/*"} Component={NewsHouse}></Route>
                     <Route path={"/user/*"} Component={User}></Route>
                     <Route path={"/about/*"} Component={About}></Route>
                     <Route path={"/login"} Component={Login}></Route>
