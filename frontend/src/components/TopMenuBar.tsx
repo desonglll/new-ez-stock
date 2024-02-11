@@ -57,6 +57,7 @@ export function TopMenuBar() {
 
     return (
         <Fragment>
+
             <Menu
                 onClick={onClick}
                 selectedKeys={[current]}
