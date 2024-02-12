@@ -1,5 +1,5 @@
 import {Button, Layout} from "antd";
-import {Content} from "antd/es/layout/layout";
+import {Content, Header} from "antd/es/layout/layout";
 import {Route, Routes} from "react-router-dom";
 import {NewsList} from "./news/NewsList.tsx";
 import Sider from "antd/es/layout/Sider";
@@ -8,11 +8,29 @@ import {NewsDetail} from "./news/NewsDetail.tsx";
 import {AddNews} from "./news/AddNews.tsx";
 import {useState} from "react";
 import {MdTableRows} from "react-icons/md";
+import {TopMenuBar} from "../components/TopMenuBar.tsx";
 
 export function NewsHouse() {
     const [collapsed, setCollapsed] = useState(false);
     return (
         <>
+            <Layout style={{backgroundColor: "transparent"}}>
+                <Header
+                    style={{
+                        backgroundColor: "white",
+                    }}
+                >
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+
+                        <TopMenuBar/>
+                    </div>
+                </Header>
+            </Layout>
             <Layout style={{backgroundColor: "white"}}>
                 <Sider style={{backgroundColor: "transparent"}} collapsed={collapsed}
                 >

@@ -48,7 +48,6 @@ export const ProductSideBar = () => {
     };
 
     useEffect(() => {
-        console.log(location.pathname)
         setCurrent(location.pathname);
     }, [location.pathname]);
 

@@ -1,6 +1,6 @@
 import {Button, Layout} from "antd";
 import Sider from "antd/es/layout/Sider";
-import {Content,} from "antd/es/layout/layout";
+import {Content, Header,} from "antd/es/layout/layout";
 import {ProductSideBar} from "../components/ProductSideBar.tsx";
 import {ProductList} from "./products/ProductList.tsx";
 import {useEffect, useState} from "react";
@@ -22,14 +22,12 @@ import {AddAttr} from "./products/AddAttr.tsx";
 import {MdTableRows} from "react-icons/md";
 import {CategoryParentList} from "./categories/CategoryParentList.tsx";
 import {CategorySubList} from "./categories/CategorySubList.tsx";
+import {TopMenuBar} from "../components/TopMenuBar.tsx";
 
 export function WareHouse() {
     const [collapsed, setCollapsed] = useState(false);
     const navigate = useNavigate();
-    // const handleLogout = () => {
-    //     localStorage.clear();
-    //     navigate("/login");
-    // };
+
     useEffect(() => {
         if (localStorage.getItem("is_login") != "true") {
             navigate("/login");
@@ -38,12 +36,30 @@ export function WareHouse() {
     return (
         <>
             <Layout style={{backgroundColor: "transparent"}}>
+                <Header
+                    style={{
+                        backgroundColor: "white",
+                    }}
+                >
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+
+                        <TopMenuBar/>
+                    </div>
+                </Header>
+            </Layout>
+            <Layout style={{backgroundColor: "transparent"}}>
                 <Sider
                     style={{
                         backgroundColor: "white",
                         display: "flex",
                         flexDirection: "column"
                     }}
+                    collapsed={collapsed}
                 >
                     <Button onClick={() => {
                         setCollapsed(!collapsed)

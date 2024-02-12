@@ -1,6 +1,6 @@
 import {Fragment, useEffect, useState} from "react";
 import type {MenuProps} from "antd";
-import {Menu} from "antd";
+import {Button, Menu} from "antd";
 import {useLocation, useNavigate} from "react-router-dom";
 import {FaRegCircleUser} from "react-icons/fa6";
 import {IoInformationCircleOutline} from "react-icons/io5";
@@ -10,22 +10,22 @@ import {FaRegNewspaper} from "react-icons/fa";
 const items: MenuProps["items"] = [
     {
         label: "WareHouse",
-        key: "warehouse",
+        key: "/warehouse",
         icon: <LuWarehouse/>,
     },
     {
         label: "News",
-        key: "news",
+        key: "/news",
         icon: <FaRegNewspaper/>,
     },
     {
         label: "User",
-        key: "user",
+        key: "/user",
         icon: <FaRegCircleUser/>,
     },
     {
         label: "About",
-        key: "about",
+        key: "/about",
         icon: <IoInformationCircleOutline/>,
     },
     {
@@ -34,7 +34,7 @@ const items: MenuProps["items"] = [
                 Gitee - Link
             </a>
         ),
-        key: "alipay",
+        key: "/alipay",
     },
 ];
 
@@ -43,13 +43,16 @@ export function TopMenuBar() {
     const [current, setCurrent] = useState("/");
     const navigate = useNavigate();
     const onClick: MenuProps["onClick"] = (e) => {
-        console.log("click ", e);
         setCurrent(e.key);
         navigate(e.key);
     };
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate("/login");
+    };
     useEffect(() => {
         // 在组件初次渲染时设置 defaultSelectedKeys
-        const initialKey = location.pathname.split("/")[1];
+        const initialKey = location.pathname
         if (initialKey != "") {
             setCurrent(initialKey);
         }
@@ -57,15 +60,15 @@ export function TopMenuBar() {
 
     return (
         <Fragment>
-
             <Menu
                 onClick={onClick}
                 selectedKeys={[current]}
                 mode="horizontal"
                 items={items}
                 defaultSelectedKeys={[current]}
-                style={{width: "80vw"}}
+                style={{width: "100%"}}
             />
+            <Button onClick={() => handleLogout()}>Logout</Button>
         </Fragment>
     );
 }
