@@ -5,7 +5,7 @@ import {get_headers} from "../../utils/basic.ts";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 
-export const AddCategory = () => {
+export const CategoryAdd = () => {
     const [messageApi, contextHolder] = message.useMessage();
     const navigate = useNavigate();
     const instance = axios.create()

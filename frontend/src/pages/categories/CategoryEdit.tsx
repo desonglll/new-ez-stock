@@ -7,7 +7,7 @@ import axios from "axios";
 import {get_headers} from "../../utils/basic.ts";
 import {get_category_by_pk} from "../../utils/categories.ts";
 
-export const EditCategory = () => {
+export const CategoryEdit = () => {
     const {pk} = useParams();
     const instance = axios.create();
     const [loadingPage, setLoadingPage] = useState(true);

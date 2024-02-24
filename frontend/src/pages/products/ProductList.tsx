@@ -1,215 +1,31 @@
-import {useEffect, useState} from "react";
-import axios from "axios";
-import * as React from "react";
-import {
-    Button,
-    Card, Form, Input,
-    message,
-    Pagination,
-    PaginationProps,
-    Space,
-    Spin,
-    Table,
-    TableColumnsType,
-    Tag,
-} from "antd";
-import "bootstrap/dist/css/bootstrap.css";
-import {
-    CheckCircleOutlined,
-    CloseCircleOutlined,
-    LoadingOutlined,
-} from "@ant-design/icons";
+// OPTIMIZED
+
+import {Button, notification, Spin, Table, TableProps, Tag} from "antd";
+import {Product} from "../../utils/models.ts";
+import React, {Key, useEffect, useState} from "react";
+import {delete_product_by_pk, delete_products, get_products} from "../../utils/products.ts";
+import ButtonGroup from "antd/es/button/button-group";
 import {useNavigate} from "react-router-dom";
-import FormItem from "antd/es/form/FormItem";
-
-interface Product {
-    key: React.Key;
-    pk: number;
-    owner: {}; // 你可能需要更改这里的类型，以匹配 User 模型的定义
-    name: string;
-    description: string | null;
-    sku: string;
-    // image: string | null;  // 这里你可能希望使用实际的图像 URL 类型
-    // price: number | null;
-    // discount_price: number | null;
-    // is_discounted: boolean;
-    // stock_quantity: number;
-    is_in_stock: boolean;
-    // categories: number[];  // 你可能需要更改这里的类型，以匹配 Category 模型的定义
-    // created_at: string;  // 或者使用 Date 类型
-    // updated_at: string;  // 或者使用 Date 类型
-    // attributes: number[];  // 你可能需要更改这里的类型，以匹配 ProductAttribute 模型的定义
-    // supplier: number | null;  // 你可能需要更改这里的类型，以匹配 Supplier 模型的定义
-    // weight: number | null;
-    // dimensions: string | null;
-    // status: string;  // 根据 ProductStatus.choices 中的实际值更改类型
-    // public: boolean;
-    is_valid: boolean;
-}
-
-interface Result {
-    count: number;
-    next: string;
-    previous: string;
-    total_pages: number;
-    results: Product[];
-}
+import {CheckCircleOutlined, CloseCircleOutlined, SmileOutlined} from '@ant-design/icons';
+import "../../assets/ProductList.scss"
 
 export function ProductList() {
+    const navigate = useNavigate()
+    const [api, contextHolder] = notification.useNotification();
+    const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [count, setCount] = useState(0)
+    const [items, setItems] = useState<Product[]>()
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-    const [searchField, setSearchField] = useState("null");
-    const [loading, setLoading] = useState(false);
-    const [deleteLoading, setDeleteLoading] = useState(false);
-    const [pageLoading, setPageLoading] = useState(true);
-    const navigate = useNavigate();
-    const [messageApi, contextHolder] = message.useMessage();
-    const [productList, setProductList] = useState<Product[]>([]);
-    const [result, setResult] = useState<Result>({
-        count: 0,
-        next: "null",
-        previous: "null",
-        total_pages: 0,
-        results: [],
-    });
-    const access = localStorage.getItem("access");
-    const headers = {
-        Authorization: `Bearer ${access}`,
-        "Content-Type": "application/json",
-    };
-    const instance = axios.create();
-
-    const fetchData = async (
-        limit: number,
-        offset: number,
-        current_page: number,
-        search = "null"
-    ) => {
-        try {
-            if (search != "null") {
-                return await instance.get(`/api/search/?q=${search}`, {
-                    headers: headers,
-                    params: {
-                        limit: limit,
-                        offset: offset * (current_page - 1),
-                    },
-                });
-            } else {
-                return await instance.get("/api/products/", {
-                    headers: headers,
-                    params: {
-                        limit: limit,
-                        offset: offset * (current_page - 1),
-                    },
-                });
-            }
-
-        } finally {
-            setPageLoading(false);
-        }
-    };
-
-    /**
-     *
-     * @param limit
-     * @param offset
-     * @param current_page
-     * @param search initial value "null" means do not search
-     */
-    const updateData = (limit: number, offset: number, current_page: number, search = "null") => {
-        fetchData(limit, offset, current_page, search)
-            .then((res) => {
-                if (res.data) {
-                    setResult(res.data);
-                    setProductList(res.data.results);
-                }
-            })
-            .catch((err) => {
-                if (err.response.data.code === "token_not_valid") {
-                    console.log("token_not_valid");
-                    navigate("/login");
-                }
-            })
-            .finally(() => {
-            });
-    };
-    const handleEdit = (item: Product) => {
-        navigate(`/warehouse/products/${item.pk}`);
-    };
-    const handleDelete = (item: Product) => {
-        instance
-            .delete(`api/products/${item.pk}/delete/`, {
-                headers: headers,
-            })
-            .finally();
-        messageApi
-            .open({
-                type: "success",
-                content: "Delete successfully",
-            })
-            .then(() => {
-                window.location.reload();
-            });
-    };
-
-    const deleteSelected = () => {
-        instance
-            .delete("api/products/delete/", {
-                data: {delete_list: selectedRowKeys}, // 将数据放入 data 属性
-                headers: headers,
-            })
-            .then((res) => {
-                if (res.data.status === "success") {
-                    console.log("success");
-                    setDeleteLoading(true);
-                    // ajax request after empty completing
-                    setTimeout(() => {
-                        setSelectedRowKeys([]);
-                        updateData(10, 0, 1);
-                        setDeleteLoading(false);
-                    }, 1000);
-                }
-            })
-            .finally();
-    };
-    const start = () => {
-        setLoading(true);
-        // ajax request after empty completing
-        setTimeout(() => {
-            setSelectedRowKeys([]);
-            updateData(10, 0, 1);
-            setLoading(false);
-        }, 1000);
-    };
-
-    const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-        setSelectedRowKeys(newSelectedRowKeys);
-    };
-    const [current, setCurrent] = useState(1);
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: onSelectChange,
-    };
-    const hasSelected = selectedRowKeys.length > 0;
-    const onPageChange: PaginationProps["onChange"] = (select_page) => {
-        setCurrent(select_page);
-        updateData(10, 10, select_page, searchField);
-    };
-    const onShowPageSizeChange = (current: number, size: number) => {
-        updateData(size, 0, current, searchField);
-    };
-
-    const columns: TableColumnsType<Product> = [
+    const columns: TableProps<Product>['columns'] = [
         {
-            title: "SKU",
-            dataIndex: "sku",
-            width: 200,
-            sorter: (a, b) => a.sku.localeCompare(b.sku),
+            title: 'PK',
+            dataIndex: 'pk',
         },
         {
             title: "Name",
             dataIndex: "name",
-            width: 300,
-            sorter: (a, b) => a.name.localeCompare(b.name),
         },
         {
             title: "Is In Stock",
@@ -234,7 +50,7 @@ export function ProductList() {
                     value: false,
                 },
             ],
-            onFilter: (value: any, record) => record.is_in_stock === value,
+            onFilter: (value: boolean | Key, record) => record.is_in_stock === value,
             width: 100,
         },
         {
@@ -260,109 +76,120 @@ export function ProductList() {
                     value: false,
                 },
             ],
-            onFilter: (value: any, record) => record.is_valid === value,
+            onFilter: (value: boolean | Key, record) => record.is_valid === value,
             width: 100,
         },
         {
             title: "Actions",
-            render: (_, record) => (
-                <Space size="middle">
-                    <a onClick={() => handleEdit(record)}>Edited {record.pk}</a>
-                    <a onClick={() => handleDelete(record)}>Delete</a>
-                </Space>
-            ),
-            width: 200,
-        },
-    ];
-
+            render: (item) => <ButtonGroup>
+                <Button style={{width: 100}} onClick={() => {
+                    navigate(`/warehouse/products/${item.pk}`)
+                }}>Edit {item.pk}</Button>
+                <Button style={{width: 100}}
+                        onClick={() => {
+                            console.log(`Delete ${item.pk}`)
+                            handleDelete(item.pk).then()
+                        }}
+                        danger
+                >Delete {item.pk}</Button>
+            </ButtonGroup>
+        }
+    ]
+    /**
+     * async function, using to fetch the data from backend
+     * @param currentPage means the page number started with.
+     * @param pageSize means the limit of the items per page.
+     */
+    const fetchData = async (currentPage: number, pageSize: number) => {
+        const response = await get_products(currentPage, pageSize)
+        console.log(response)
+        setCount(response.count)
+        return response.results.map((item: Product) => ({
+            pk: item.pk,
+            name: item.name,
+            is_in_stock: item.is_in_stock,
+            is_valid: item.is_valid
+        }))
+    }
+    /**
+     * Deleting a product item by specific pk number.
+     * @param pk
+     */
+    const handleDelete = async (pk: number) => {
+        const response = await delete_product_by_pk(pk)
+        if (response.status === "success") {
+            api.open({
+                message: `Delete ${pk} successfully`,
+                description:
+                    'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+                icon: <SmileOutlined style={{color: '#108ee9'}}/>,
+            });
+        }
+        fetchData(currentPage, pageSize).then((mapData) => {
+            setItems(mapData)
+        })
+    }
+    /**
+     * UseEffect function
+     */
     useEffect(() => {
-        updateData(10, 0, 1);
+        fetchData(1, 10).then((mapData) => {
+            setItems(mapData)
+        }).finally(() => {
+            setLoading(!loading)
+        })
     }, []);
+    const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+        setSelectedRowKeys(newSelectedRowKeys);
+    };
 
-    const handleAdd = () => {
-        console.log("handleAdd");
-        navigate("add");
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    };
+    const deleteSelected = async () => {
+        const response = await delete_products(selectedRowKeys)
+        if (response.status === "success") {
+            api.open({
+                message: `Delete ${selectedRowKeys} successfully`,
+                description:
+                    'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+                icon: <SmileOutlined style={{color: '#108ee9'}}/>,
+            });
+        }
+        fetchData(currentPage, pageSize).then((mapData) => {
+            setItems(mapData)
+        })
     };
     return (
         <>
-            {contextHolder}
-            <Spin
-                indicator={<LoadingOutlined style={{fontSize: 24}} spin/>}
-                spinning={pageLoading}
-                tip="Loading..."
-            >
-                {pageLoading ? (
-                    <div>loading</div>
-                ) : (
-                    <Card>
-                        <div
-                            style={{
-                                margin: 16,
-                            }}
-                        >
-                            <Button onClick={start} loading={loading}>
-                                Reload All
-                            </Button>
-                            <Button
-                                style={{marginLeft: 8, marginRight: 8}}
-                                onClick={handleAdd}
-                            >
-                                Add
-                            </Button>
-                            <Button
-                                type="primary"
-                                onClick={deleteSelected}
-                                disabled={!hasSelected}
-                                loading={deleteLoading}
-                                style={{marginLeft: 8, marginRight: 8}}
-                                danger={true}
-                            >
-                                Delete
-                                <span style={{marginLeft: 8}}>
-                                  {hasSelected
-                                      ? `Selected ${selectedRowKeys.length} items`
-                                      : ""}
-                                </span>
-                            </Button>
-                            <Form
-                                onFinish={(event) => {
-                                    console.log(event)
-                                    updateData(10, 0, 1, event.searchField)
-                                    setSearchField(event.searchField)
-                                    console.log(searchField)
-                                }}>
-                                <FormItem name={"searchField"}>
-                                    <div>
-                                        <Input style={{width: 200, marginTop: 18, marginRight: 18}}/>
-                                        <Button htmlType={"submit"}>Search</Button>
-                                    </div>
-                                </FormItem>
-                            </Form>
-                        </div>
-                        <Card>
-                            <Table
-                                rowSelection={rowSelection}
-                                columns={columns}
-                                dataSource={productList}
-                                rowKey={"pk"}
-                                pagination={false}
-                            />
-                            <Pagination
-                                showQuickJumper
-                                showSizeChanger
-                                onShowSizeChange={onShowPageSizeChange}
-                                style={{marginTop: 20}}
-                                defaultCurrent={1}
-                                current={current}
-                                total={result.count}
-                                showTotal={(total, range) =>
-                                    `${range[0]}-${range[1]} of ${total} items`
-                                }
-                                // defaultPageSize={20}
-                                onChange={onPageChange}
-                            />
-                        </Card>
-                    </Card>
+            <Spin spinning={loading}>
+                {loading ? (<div>aa</div>) : (
+                    <>
+                        {contextHolder}
+                        <Button className={"add_button"} onClick={() => {
+                            navigate("/warehouse/products/add")
+                        }}>Add</Button>
+                        <Button danger className={"delete_button"} onClick={deleteSelected}>Delete</Button>
+                        <Table rowKey={"pk"}
+                               columns={columns}
+                               dataSource={items}
+                               pagination={{
+                                   showSizeChanger: true,
+                                   onChange: (page, pageSize) => {
+                                       setCurrentPage(page)
+                                       setPageSize(pageSize)
+                                       fetchData(page, pageSize).then((mapData) => {
+                                           setItems(mapData)
+                                       })
+                                   },
+                                   total: count,
+                                   current: currentPage
+                               }}
+                               rowSelection={rowSelection}
+                        />
+                    </>
                 )}
             </Spin>
         </>

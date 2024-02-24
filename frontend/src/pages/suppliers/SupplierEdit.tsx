@@ -7,7 +7,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { get_headers } from "../../utils/basic.ts";
 
-export const EditSupplier = () => {
+export const SupplierEdit = () => {
   const { pk } = useParams();
   const instance = axios.create();
   const [loadingPage, setLoadingPage] = useState(true);

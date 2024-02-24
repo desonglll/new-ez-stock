@@ -33,7 +33,7 @@ import dayjs from "dayjs";
 import {get_headers, get_local_access_code} from "../../utils/basic.ts";
 
 const {TextArea} = Input;
-export const AddProduct = () => {
+export const ProductAdd = () => {
     const [suppliers, setSuppliers] = useState<[]>([]);
     const [categories, setCategories] = useState<[]>([]);
     const [productAttr, setProductAttr] = useState<[]>([]);

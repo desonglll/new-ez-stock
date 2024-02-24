@@ -8,7 +8,7 @@ import {LoadingOutlined} from "@ant-design/icons";
 import axios from "axios";
 import {get_headers} from "../../utils/basic.ts";
 
-export const EditAttr = () => {
+export const AttrEdit = () => {
     const {pk} = useParams()
     const [attribute, setAttribute] = useState<ProductAttribute>();
     const [loadingPage, setLoadingPage] = useState(true)

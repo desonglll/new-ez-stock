@@ -5,7 +5,7 @@ import {NewsList} from "./news/NewsList.tsx";
 import Sider from "antd/es/layout/Sider";
 import {NewsSideBar} from "../components/NewsSideBar.tsx";
 import {NewsDetail} from "./news/NewsDetail.tsx";
-import {AddNews} from "./news/AddNews.tsx";
+import {NewsAdd} from "./news/NewsAdd.tsx";
 import {useState} from "react";
 import {MdTableRows} from "react-icons/md";
 import {TopMenuBar} from "../components/TopMenuBar.tsx";
@@ -47,7 +47,7 @@ export function NewsHouse() {
                     <Routes>
                         <Route path={"/"} Component={NewsList}></Route>
                         <Route path={"/:id/"} Component={NewsDetail}></Route>
-                        <Route path={"/add/"} Component={AddNews}></Route>
+                        <Route path={"/add/"} Component={NewsAdd}></Route>
                     </Routes>
                 </Content>
             </Layout>

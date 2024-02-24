@@ -6,19 +6,19 @@ import {ProductList} from "./products/ProductList.tsx";
 import {useEffect, useState} from "react";
 import {Route, Routes, useNavigate} from "react-router-dom";
 import {Dashboard} from "./Dashboard.tsx";
-import {EditProduct} from "./products/EditProduct.tsx";
-import {AddProduct} from "./products/AddProduct.tsx";
+import {ProductEdit} from "./products/ProductEdit.tsx";
+import {ProductAdd} from "./products/ProductAdd.tsx";
 import {ProductAnalyze} from "./products/ProductAnalyze.tsx";
 import {SupplierList} from "./suppliers/SupplierList.tsx";
-import {EditSupplier} from "./suppliers/EditSupplier.tsx";
-import {AddSupplier} from "./suppliers/AddSupplier.tsx";
+import {SupplierEdit} from "./suppliers/SupplierEdit.tsx";
+import {SupplierAdd} from "./suppliers/SupplierAdd.tsx";
 import {ComingSoon} from "./ComingSoon.tsx";
 import {CategoryList} from "./categories/CategoryList.tsx";
-import {EditCategory} from "./categories/EditCategory.tsx";
-import {AddCategory} from "./categories/AddCategory.tsx";
+import {CategoryEdit} from "./categories/CategoryEdit.tsx";
+import {CategoryAdd} from "./categories/CategoryAdd.tsx";
 import {AttrList} from "./products/AttrList.tsx";
-import {EditAttr} from "./products/EditAttr.tsx";
-import {AddAttr} from "./products/AddAttr.tsx";
+import {AttrEdit} from "./products/AttrEdit.tsx";
+import {AttrAdd} from "./products/AttrAdd.tsx";
 import {MdTableRows} from "react-icons/md";
 import {CategoryParentList} from "./categories/CategoryParentList.tsx";
 import {CategorySubList} from "./categories/CategorySubList.tsx";
@@ -77,21 +77,21 @@ export function WareHouse() {
                         <Route path={"/coming"} Component={ComingSoon}></Route>
                         <Route path={"/dashboard"} Component={Dashboard}></Route>
                         <Route path={"/products"} Component={ProductList}></Route>
-                        <Route path={"/products/:pk"} Component={EditProduct}></Route>
-                        <Route path={"/products/add"} Component={AddProduct}></Route>
+                        <Route path={"/products/:pk"} Component={ProductEdit}></Route>
+                        <Route path={"/products/add"} Component={ProductAdd}></Route>
                         <Route
                             path={"/products/analyze"}
                             Component={ProductAnalyze}
                         ></Route>
                         <Route path={"/products-attr"} Component={AttrList}></Route>
-                        <Route path={"/products-attr/:pk"} Component={EditAttr}></Route>
-                        <Route path={"/products-attr/add"} Component={AddAttr}></Route>
+                        <Route path={"/products-attr/:pk"} Component={AttrEdit}></Route>
+                        <Route path={"/products-attr/add"} Component={AttrAdd}></Route>
                         <Route path={"/suppliers"} Component={SupplierList}></Route>
-                        <Route path={"/suppliers/:pk"} Component={EditSupplier}></Route>
-                        <Route path={"/suppliers/add"} Component={AddSupplier}></Route>
+                        <Route path={"/suppliers/:pk"} Component={SupplierEdit}></Route>
+                        <Route path={"/suppliers/add"} Component={SupplierAdd}></Route>
                         <Route path={"/categories"} Component={CategoryList}></Route>
-                        <Route path={"/categories/:pk"} Component={EditCategory}></Route>
-                        <Route path={"/categories/add"} Component={AddCategory}></Route>
+                        <Route path={"/categories/:pk"} Component={CategoryEdit}></Route>
+                        <Route path={"/categories/add"} Component={CategoryAdd}></Route>
                         <Route path={"/categories/parents"} Component={CategoryParentList}></Route>
                         <Route path={"/categories/sub"} Component={CategorySubList}></Route>
                     </Routes>

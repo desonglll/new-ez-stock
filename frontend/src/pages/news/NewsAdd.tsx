@@ -3,7 +3,7 @@ import FormItem from "antd/es/form/FormItem";
 import axios from "axios";
 import {get_headers} from "../../utils/basic.ts";
 
-export function AddNews() {
+export function NewsAdd() {
     const instace = axios.create()
     return (
         <>

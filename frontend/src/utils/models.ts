@@ -3,11 +3,11 @@ import * as React from "react";
 export interface Product {
     key: React.Key;
     pk: number;
-    owner: {};
+    owner: NonNullable<unknown>; //warning
     name: string; //#
     description: string | null; //#
-    sku: string; //#
-    image: any;
+    sku: string; // warning
+    image: string;
     price: number | null; //#
     discount_price: number | null; //#
     is_discounted: boolean; //#

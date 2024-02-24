@@ -4,7 +4,7 @@ import axios from "axios";
 import {get_headers} from "../../utils/basic.ts";
 import {useNavigate} from "react-router-dom";
 
-export const AddAttr = () => {
+export const AttrAdd = () => {
     const [messageApi, contextHolder] = message.useMessage();
     const navigate = useNavigate();
     const handleSubmit = (data: ProductAttribute) => {

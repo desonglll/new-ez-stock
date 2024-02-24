@@ -34,7 +34,7 @@ import dayjs from "dayjs";
 import {get_headers, get_local_access_code} from "../../utils/basic.ts";
 
 const {TextArea} = Input;
-export const EditProduct = () => {
+export const ProductEdit = () => {
     /**
      * Passed param
      */

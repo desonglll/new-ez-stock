@@ -22,8 +22,8 @@ from api.models import Result
 
 
 class ProductListCreateAPIView(
-    UserQuerySetMixin,
-    StaffEditorPermissionMixin,
+    # UserQuerySetMixin,
+    # StaffEditorPermissionMixin,
     generics.ListCreateAPIView
 ):
     """
@@ -74,8 +74,9 @@ product_list_create_view = ProductListCreateAPIView.as_view()
 
 
 class ProductDetailAPIView(
-    StaffEditorPermissionMixin,
-    generics.RetrieveAPIView
+    # StaffEditorPermissionMixin,
+    generics.RetrieveAPIView,
+    generics.DestroyAPIView
 ):
     """
     Product Retrieve Detail API view.
@@ -93,12 +94,27 @@ class ProductDetailAPIView(
         result = Result(status='success', message='Product retrieved successfully', data=data)
         return JsonResponse(result.to_json(), status=200)
 
+    def destroy(self, request, *args, **kwargs):
+        """
+        Destroy a model instance.
+        """
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        data = serializer.data
+        self.perform_destroy(instance)
+        result = Result(status="success", message="Product destroyed successfully", data=data)
+
+        return JsonResponse(result.to_json(), status=200)
+
+    def perform_destroy(self, instance):
+        super().perform_destroy(instance)
+
 
 product_detail_view = ProductDetailAPIView.as_view()
 
 
 class ProductUpdateAPIView(
-    StaffEditorPermissionMixin,
+    # StaffEditorPermissionMixin,
     generics.UpdateAPIView
 ):
     """
@@ -136,7 +152,7 @@ product_update_view = ProductUpdateAPIView.as_view()
 
 
 class ProductDestroyAPIView(
-    StaffEditorPermissionMixin,
+    # StaffEditorPermissionMixin,
     generics.DestroyAPIView
 ):
     """
@@ -166,7 +182,7 @@ product_destroy_view = ProductDestroyAPIView.as_view()
 
 
 class ProductDestroyMultipleAPIView(
-    StaffEditorPermissionMixin,
+    # StaffEditorPermissionMixin,
     generics.DestroyAPIView
 ):
     """

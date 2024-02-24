@@ -4,7 +4,7 @@ import axios from "axios";
 import { get_headers } from "../../utils/basic.ts";
 import { useNavigate } from "react-router-dom";
 
-export const AddSupplier = () => {
+export const SupplierAdd = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
   const handleSubmit = (data: Supplier) => {
