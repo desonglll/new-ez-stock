@@ -221,7 +221,8 @@ export function ProductList() {
                                okButtonProps={{style: {display: 'none'}}} // 隐藏 OK 按钮
                                cancelButtonProps={{style: {display: 'none'}}} // 隐藏 Cancel 按钮
                         >
-                            <ProductEdit pk={editPK} modalOpen={modalOpen} setModalOpen={setModalOpen}/>
+                            <ProductEdit pk={editPK} modalOpen={modalOpen} setModalOpen={setModalOpen}
+                                         refreshData={refreshData}/>
                         </Modal>
                     </>
                 )}

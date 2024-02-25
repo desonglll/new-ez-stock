@@ -37,8 +37,9 @@ const {TextArea} = Input;
 export const ProductEdit: React.FC<{
     pk: number,
     modalOpen: boolean,
-    setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({pk, modalOpen, setModalOpen}) => {
+    setModalOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    refreshData: () => void
+}> = ({pk, modalOpen, setModalOpen, refreshData}) => {
     /**
      * Passed param
      */
@@ -199,13 +200,14 @@ export const ProductEdit: React.FC<{
         val["image"] = imageURL;
         console.log(val);
         instance
-            .put(`api/products/${pk}/update/`, val, {
+            .put(`api/products/${pk}/`, val, {
                 headers: get_headers(),
             })
             .then((res) => {
                 console.log(res.data);
                 success();
                 setModalOpen(!modalOpen)
+                refreshData()
             });
     };
     const normFile = (e: { fileList: FileList }) => {

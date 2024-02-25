@@ -43,9 +43,9 @@ export const AttrList = () => {
     }
     const handleDelete = (record: ProductAttribute) => {
         console.log(record)
-        instance.delete(`api/products/product_attributes/${record.pk}/delete/`, {
+        instance.delete(`api/products/product_attributes/${record.pk}/`, {
             headers: get_headers()
-        })
+        }).then()
         messageApi
             .open({
                 type: "success",

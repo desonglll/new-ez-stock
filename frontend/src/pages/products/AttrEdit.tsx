@@ -39,7 +39,7 @@ export const AttrEdit = () => {
     }, []);
     const onFinish = (item: ProductAttribute) => {
         console.log(item)
-        instance.put(`api/products/product_attributes/${pk}/update/`, item, {
+        instance.put(`api/products/product_attributes/${pk}/`, item, {
             headers: get_headers()
         }).then(r => {
             console.log(r)

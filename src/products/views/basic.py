@@ -12,7 +12,6 @@ import json
 from django.http import JsonResponse
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
-
 from api.mixins import UserQuerySetMixin, StaffEditorPermissionMixin
 from api.serializers import ProductAttributeSerializer
 from products.serializers import ProductSerializer
@@ -76,13 +75,16 @@ product_list_create_view = ProductListCreateAPIView.as_view()
 class ProductDetailAPIView(
     # StaffEditorPermissionMixin,
     generics.RetrieveAPIView,
-    generics.DestroyAPIView
+    generics.DestroyAPIView,
+    generics.UpdateAPIView
 ):
     """
     Product Retrieve Detail API view.
     """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    lookup_field = 'pk'
+    parser_classes = (MultiPartParser, FormParser, JSONParser)
 
     def retrieve(self, request, *args, **kwargs):
         """
@@ -106,25 +108,6 @@ class ProductDetailAPIView(
 
         return JsonResponse(result.to_json(), status=200)
 
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-
-
-product_detail_view = ProductDetailAPIView.as_view()
-
-
-class ProductUpdateAPIView(
-    # StaffEditorPermissionMixin,
-    generics.UpdateAPIView
-):
-    """
-    API view for updating a specific product.
-    """
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    lookup_field = 'pk'
-    parser_classes = (MultiPartParser, FormParser, JSONParser)
-
     def update(self, request, *args, **kwargs):
         """
         Override
@@ -147,39 +130,12 @@ class ProductUpdateAPIView(
         result = Result(status='success', message='Product update successfully', data=updated_data)
         return JsonResponse(result.to_json(), status=200)
 
+    def perform_destroy(self, instance):
+        super().perform_destroy(instance)
 
-product_update_view = ProductUpdateAPIView.as_view()
 
+product_detail_view = ProductDetailAPIView.as_view()
 
-# class ProductDestroyAPIView(
-#     # StaffEditorPermissionMixin,
-#     generics.DestroyAPIView
-# ):
-#     """
-#     API view for destroying (deleting) a specific product.
-#     """
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
-#     lookup_field = 'pk'
-#
-#     def destroy(self, request, *args, **kwargs):
-#         """
-#         Destroy a model instance.
-#         """
-#         instance = self.get_object()
-#         serializer = self.get_serializer(instance)
-#         data = serializer.data
-#         self.perform_destroy(instance)
-#         result = Result(status="success", message="Product destroyed successfully", data=data)
-#
-#         return JsonResponse(result.to_json(), status=200)
-#
-#     def perform_destroy(self, instance):
-#         super().perform_destroy(instance)
-#
-#
-# product_destroy_view = ProductDestroyAPIView.as_view()
-#
 
 class ProductDestroyMultipleAPIView(
     # StaffEditorPermissionMixin,
@@ -223,14 +179,6 @@ class ProductDestroyMultipleAPIView(
 product_destroy_multiple_view = ProductDestroyMultipleAPIView.as_view()
 
 
-class ProductAttributeDetailAPIView(generics.RetrieveAPIView):
-    queryset = ProductAttribute.objects.all()
-    serializer_class = ProductAttributeSerializer
-
-
-product_attribute_detail_view = ProductAttributeDetailAPIView.as_view()
-
-
 class ProductAttributeListCreatAPIView(generics.ListCreateAPIView):
     """
     API View 用于获取和创建产品属性列表。
@@ -269,19 +217,13 @@ class ProductAttributeListCreatAPIView(generics.ListCreateAPIView):
 product_attribute_list_create_view = ProductAttributeListCreatAPIView.as_view()
 
 
-class ProductAttributeUpdateAPIView(generics.UpdateAPIView):
+class ProductAttributeDetailAPIView(
+    generics.RetrieveAPIView,
+    generics.UpdateAPIView,
+    generics.DestroyAPIView
+):
     queryset = ProductAttribute.objects.all()
     serializer_class = ProductAttributeSerializer
-    lookup_field = "pk"
 
 
-product_attribute_update_view = ProductAttributeUpdateAPIView.as_view()
-
-
-class ProductAttributeDestroyAPIView(generics.DestroyAPIView):
-    queryset = ProductAttribute.objects.all()
-    serializer_class = ProductAttributeSerializer
-    lookup_field = "pk"
-
-
-product_attribute_destroy_view = ProductAttributeDestroyAPIView.as_view()
+product_attribute_detail_view = ProductAttributeDetailAPIView.as_view()

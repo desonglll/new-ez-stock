@@ -87,6 +87,7 @@ export const delete_product_by_pk = async (pk: number) => {
     }
 }
 
+// done
 export const delete_products = async (pk_list: React.Key[]) => {
     const instance = axios.create();
     try {
