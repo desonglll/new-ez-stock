@@ -1,7 +1,7 @@
 import {Button, Card, Col, Form, Input, message, Row} from "antd";
-import {ProductAttribute} from "../../utils/models.ts";
+import {ProductAttribute} from "../utils/models.ts";
 import axios from "axios";
-import {get_headers} from "../../utils/basic.ts";
+import {get_headers} from "../utils/basic.ts";
 import {useNavigate} from "react-router-dom";
 
 export const AttrAdd = () => {

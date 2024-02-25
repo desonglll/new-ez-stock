@@ -16,7 +16,7 @@ import {CategoryEdit} from "./categories/CategoryEdit.tsx";
 import {CategoryAdd} from "./categories/CategoryAdd.tsx";
 import {AttrList} from "./products/AttrList.tsx";
 import {AttrEdit} from "./products/AttrEdit.tsx";
-import {AttrAdd} from "./products/AttrAdd.tsx";
+import {AttrAdd} from "../components/AttrAdd.tsx";
 import {MdTableRows} from "react-icons/md";
 import {CategoryParentList} from "./categories/CategoryParentList.tsx";
 import {CategorySubList} from "./categories/CategorySubList.tsx";

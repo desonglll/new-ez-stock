@@ -1,10 +1,11 @@
-import {Button, Card, message, Space, Spin, Table, TableColumnsType} from "antd";
+import {Button, Card, Drawer, message, Space, Spin, Table, TableColumnsType} from "antd";
 import {useEffect, useState} from "react";
 import {ProductAttribute} from "../../utils/models.ts";
 import {get_product_attributes} from "../../utils/products.ts";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {get_headers} from "../../utils/basic.ts";
+import {AttrAdd} from "../../components/AttrAdd.tsx";
 
 
 export const AttrList = () => {
@@ -13,6 +14,7 @@ export const AttrList = () => {
     const instance = axios.create()
     const [messageApi, contextHolder] = message.useMessage();
     const [loadingPage, setLoadingPage] = useState(true);
+    const [drawerOpen, setDrawerOpen] = useState(false)
     const columns: TableColumnsType<ProductAttribute> = [
         {
             title: 'Name',
@@ -53,14 +55,15 @@ export const AttrList = () => {
                 duration: 1.5
             })
             .then(() => {
-                window.location.reload();
+                // window.location.reload();
+                fetchData().then()
             });
     }
+    const fetchData = async () => {
+        const res = await get_product_attributes()
+        setAttributes(res)
+    }
     useEffect(() => {
-        const fetchData = async () => {
-            const res = await get_product_attributes()
-            setAttributes(res)
-        }
         fetchData().then().finally(() => {
             setLoadingPage(!loadingPage)
         })
@@ -75,12 +78,22 @@ export const AttrList = () => {
                     <Card>
                         <div>
                             <Button style={{marginBottom: 18}} onClick={() => {
-                                navigate("/warehouse/products-attr/add")
+                                setDrawerOpen(!drawerOpen)
                             }}>Add</Button>
                         </div>
                         <Table dataSource={attributes} columns={columns} rowKey={"pk"}/>
+                        <Drawer
+                            open={drawerOpen}
+                            size={"large"}
+                            onClose={() => {
+                                setDrawerOpen(!drawerOpen)
+                                fetchData().then()
+                            }}
+                            placement={"right"}
+                        >
+                            <AttrAdd/>
+                        </Drawer>
                     </Card>
-
                 )}
             </Spin>
         </>
