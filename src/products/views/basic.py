@@ -151,35 +151,35 @@ class ProductUpdateAPIView(
 product_update_view = ProductUpdateAPIView.as_view()
 
 
-class ProductDestroyAPIView(
-    # StaffEditorPermissionMixin,
-    generics.DestroyAPIView
-):
-    """
-    API view for destroying (deleting) a specific product.
-    """
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    lookup_field = 'pk'
-
-    def destroy(self, request, *args, **kwargs):
-        """
-        Destroy a model instance.
-        """
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        data = serializer.data
-        self.perform_destroy(instance)
-        result = Result(status="success", message="Product destroyed successfully", data=data)
-
-        return JsonResponse(result.to_json(), status=200)
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-
-
-product_destroy_view = ProductDestroyAPIView.as_view()
-
+# class ProductDestroyAPIView(
+#     # StaffEditorPermissionMixin,
+#     generics.DestroyAPIView
+# ):
+#     """
+#     API view for destroying (deleting) a specific product.
+#     """
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
+#     lookup_field = 'pk'
+#
+#     def destroy(self, request, *args, **kwargs):
+#         """
+#         Destroy a model instance.
+#         """
+#         instance = self.get_object()
+#         serializer = self.get_serializer(instance)
+#         data = serializer.data
+#         self.perform_destroy(instance)
+#         result = Result(status="success", message="Product destroyed successfully", data=data)
+#
+#         return JsonResponse(result.to_json(), status=200)
+#
+#     def perform_destroy(self, instance):
+#         super().perform_destroy(instance)
+#
+#
+# product_destroy_view = ProductDestroyAPIView.as_view()
+#
 
 class ProductDestroyMultipleAPIView(
     # StaffEditorPermissionMixin,

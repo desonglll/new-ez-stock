@@ -4,4 +4,4 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:8000";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
+ReactDOM.createRoot(document.getElementById("root")!).render(<App/>);

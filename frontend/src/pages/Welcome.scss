@@ -1,0 +1,52 @@
+.welcomeBody {
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+}
+
+.logo {
+  height: 10em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+.logo.django:hover {
+  filter: drop-shadow(0 0 2em #092E20);
+}
+
+.logo.typescript:hover {
+  filter: drop-shadow(0 0 2em #3178C6);
+}
+
+.logo.ant-design:hover {
+  filter: drop-shadow(0 0 2em #3178C6);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .logo.react {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}

@@ -1,16 +1,16 @@
 // OPTIMIZED
 
-import {Button, notification, Spin, Table, TableProps, Tag} from "antd";
+import {Button, Drawer, Modal, notification, Spin, Table, TableProps, Tag} from "antd";
 import {Product} from "../../utils/models.ts";
 import React, {Key, useEffect, useState} from "react";
 import {delete_product_by_pk, delete_products, get_products} from "../../utils/products.ts";
 import ButtonGroup from "antd/es/button/button-group";
-import {useNavigate} from "react-router-dom";
 import {CheckCircleOutlined, CloseCircleOutlined, SmileOutlined} from '@ant-design/icons';
 import "../../assets/ProductList.scss"
+import {ProductAdd} from "../../components/ProductAdd.tsx";
+import {ProductEdit} from "../../components/ProductEdit.tsx";
 
 export function ProductList() {
-    const navigate = useNavigate()
     const [api, contextHolder] = notification.useNotification();
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
@@ -18,6 +18,9 @@ export function ProductList() {
     const [count, setCount] = useState(0)
     const [items, setItems] = useState<Product[]>()
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+    const [drawerOpen, setDrawerOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [editPK, setEditPK] = useState(0)
     const columns: TableProps<Product>['columns'] = [
         {
             title: 'PK',
@@ -83,7 +86,9 @@ export function ProductList() {
             title: "Actions",
             render: (item) => <ButtonGroup>
                 <Button style={{width: 100}} onClick={() => {
-                    navigate(`/warehouse/products/${item.pk}`)
+                    // navigate(`/warehouse/products/${item.pk}`)
+                    setEditPK(item.pk)
+                    setModalOpen(!modalOpen)
                 }}>Edit {item.pk}</Button>
                 <Button style={{width: 100}}
                         onClick={() => {
@@ -162,33 +167,62 @@ export function ProductList() {
             setItems(mapData)
         })
     };
+    const refreshData = () => {
+        fetchData(currentPage, pageSize).then((mapData) => {
+            setItems(mapData)
+        })
+    }
     return (
         <>
             <Spin spinning={loading}>
-                {loading ? (<div>aa</div>) : (
+                {loading ? (<div>Loading</div>) : (
                     <>
                         {contextHolder}
                         <Button className={"add_button"} onClick={() => {
-                            navigate("/warehouse/products/add")
+                            setDrawerOpen(!drawerOpen)
                         }}>Add</Button>
                         <Button danger className={"delete_button"} onClick={deleteSelected}>Delete</Button>
-                        <Table rowKey={"pk"}
-                               columns={columns}
-                               dataSource={items}
-                               pagination={{
-                                   showSizeChanger: true,
-                                   onChange: (page, pageSize) => {
-                                       setCurrentPage(page)
-                                       setPageSize(pageSize)
-                                       fetchData(page, pageSize).then((mapData) => {
-                                           setItems(mapData)
-                                       })
-                                   },
-                                   total: count,
-                                   current: currentPage
-                               }}
-                               rowSelection={rowSelection}
+                        <Table
+                            className={"product_table"}
+                            rowKey={"pk"}
+                            columns={columns}
+                            dataSource={items}
+                            pagination={{
+                                showSizeChanger: true,
+                                onChange: (page, pageSize) => {
+                                    setCurrentPage(page)
+                                    setPageSize(pageSize)
+                                    fetchData(page, pageSize).then((mapData) => {
+                                        setItems(mapData)
+                                    })
+                                },
+                                total: count,
+                                current: currentPage,
+                                position: ["bottomLeft"]
+                            }}
+                            rowSelection={rowSelection}
                         />
+                        <Drawer
+                            title="Basic Drawer"
+                            onClose={() => {
+                                console.log("close")
+                                setDrawerOpen(!drawerOpen)
+                            }}
+                            open={drawerOpen}
+                            size={"large"}
+                        >
+                            <ProductAdd drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}
+                                        refreshData={refreshData}/>
+                        </Drawer>
+                        <Modal open={modalOpen}
+                               onCancel={() => {
+                                   setModalOpen(!modalOpen)
+                               }}
+                               okButtonProps={{style: {display: 'none'}}} // 隐藏 OK 按钮
+                               cancelButtonProps={{style: {display: 'none'}}} // 隐藏 Cancel 按钮
+                        >
+                            <ProductEdit pk={editPK} modalOpen={modalOpen} setModalOpen={setModalOpen}/>
+                        </Modal>
                     </>
                 )}
             </Spin>

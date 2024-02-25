@@ -44,7 +44,7 @@ urlpatterns = [
     #     Endpoint: /api/products/<product_id>/delete/
     #     方法: DELETE
     #     允许用户删除特定产品。
-    path('<int:pk>/delete/', basic.product_destroy_view, name="product_destroy"),
+    # path('<int:pk>/delete/', basic.product_destroy_view, name="product_destroy"),
     path('delete/', basic.product_destroy_multiple_view, name="product_destroy_multiple"),
     path("product_attributes/", basic.product_attribute_list_create_view, name="product_attribute_list_create"),
     path("product_attributes/<int:pk>/", basic.product_attribute_detail_view, name="product_attribute_detail"),

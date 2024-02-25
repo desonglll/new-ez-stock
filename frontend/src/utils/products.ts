@@ -44,7 +44,6 @@ export const get_product_attribute_by_pk = async (pk: number) => {
 
 export const getProductInfo = async () => {
     const instance = axios.create();
-
     try {
         const response = await instance.get("api/product_info/", {
             headers: get_headers(),
@@ -56,6 +55,7 @@ export const getProductInfo = async () => {
     }
 };
 
+// done
 export const get_products = async (page: number, pageSize: number) => {
     const instance = axios.create();
     try {
@@ -73,6 +73,7 @@ export const get_products = async (page: number, pageSize: number) => {
     }
 }
 
+// done
 export const delete_product_by_pk = async (pk: number) => {
     const instance = axios.create();
     try {

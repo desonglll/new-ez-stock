@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router-dom";
+import {useNavigate,} from "react-router-dom";
 import {
     Button,
     Card,
@@ -9,20 +9,21 @@ import {
     Space,
     Spin,
     Switch,
+    Typography,
+    Image,
     DatePicker,
     Upload,
     Row,
     Col,
     Divider,
     UploadProps,
-    Image,
 } from "antd";
-import {useEffect, useState} from "react";
-import {get_product_attributes} from "../../utils/products.ts";
+import React, {useEffect, useState} from "react";
+import {get_product_attributes, getProductByPk} from "../utils/products.ts";
+import {Product} from "../utils/models.ts";
 import "bootstrap/dist/css/bootstrap.css";
-import {getSuppliers} from "../../utils/suppliers.ts";
+import {getSuppliers} from "../utils/suppliers.ts";
 import axios from "axios";
-import {getCategories} from "../../utils/categories.ts";
 import {
     CheckOutlined,
     CloseOutlined,
@@ -30,20 +31,65 @@ import {
     UploadOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
-import {get_headers, get_local_access_code} from "../../utils/basic.ts";
+import {get_headers, get_local_access_code} from "../utils/basic.ts";
 
 const {TextArea} = Input;
-export const ProductAdd = () => {
+export const ProductEdit: React.FC<{
+    pk: number,
+    modalOpen: boolean,
+    setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+}> = ({pk, modalOpen, setModalOpen}) => {
+    /**
+     * Passed param
+     */
+    // const {pk} = useParams();
+
+    /**
+     * This variable is for detail object received from backend
+     */
+    const [item, setItem] = useState<Product>();
+    /**
+     * For supplier selections
+     */
     const [suppliers, setSuppliers] = useState<[]>([]);
+    /**
+     * For category selections
+     */
     const [categories, setCategories] = useState<[]>([]);
     const [productAttr, setProductAttr] = useState<[]>([]);
-    const [isDiscount, setIsDiscount] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
-    const instance = axios.create();
-    const [messageApi, contextHolder] = message.useMessage();
     const [form] = Form.useForm();
+
+    /**
+     * For control the initial value of switch by given detail message
+     */
+    const [isDiscount, setIsDiscount] = useState(false);
+
+    /**
+     * Waiting for the detail message load for enter the page at the first time
+     */
+    const [pageLoading, setPageLoading] = useState(true);
+
+    /**
+     * For navigate to some basic page if something wrong happened
+     */
+    const navigate = useNavigate();
+
+    /**
+     * This is axios instance.
+     * For send http request to the backend server.
+     */
+    const instance = axios.create();
+
+    /**
+     * For global success message
+     */
+    const [messageApi, contextHolder] = message.useMessage();
+
+    /**
+     * For receiving the image url after upload to backend successfully.
+     */
     const [imageURL, setImageURL] = useState("");
+
     /**
      *  Url for displaying preview image.
      */
@@ -62,25 +108,43 @@ export const ProductAdd = () => {
             if (event.file && event.file.response && event.file.response.image_url) {
                 setImageURL(event.file.response.image_url);
                 setImagePreviewURL(event.file.response.image_url);
+                success();
             } else {
-                console.error("Unexpected response structure:", event);
+                console.log(event)
             }
         },
     };
-    const success = () => {
+
+    /**
+     * For global success message.
+     * @param msg
+     */
+    const success = (msg = "Operation") => {
         messageApi
             .open({
                 type: "success",
-                content: "Updated successfully",
+                content: `${msg} successfully`,
                 duration: 1.5,
             })
-            .then(() => {
-                navigate("/warehouse/products");
-            });
+            .then();
     };
+
+    /**
+     * useEffect hook function.
+     */
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = async (pk: number) => {
             try {
+                const result = await getProductByPk(pk); // Getting product detail directly
+                setItem(result);
+                /**
+                 * Update image preview url after grab the detail information
+                 */
+                if (result.image !== "") {
+                    setImagePreviewURL(result.image);
+                }
+                setIsDiscount(result.is_discounted);
+
                 /**
                  * Get suppliers selection
                  */
@@ -89,8 +153,8 @@ export const ProductAdd = () => {
                 /**
                  * Get categories selection
                  */
-                const cateResponseData = await getCategories();
-                const cate = cateResponseData.map(
+                const cateResponseData = await instance.get("api/categories/get_sub/");
+                const cate = cateResponseData.data.data.map(
                     (item: {
                         pk: number;
                         user: number;
@@ -115,25 +179,36 @@ export const ProductAdd = () => {
                 );
                 setProductAttr(product_attr);
             } catch (err) {
+                /**
+                 * Redirect to basic page after error occurred.
+                 */
                 console.log("err: ", err);
                 navigate("/login");
             } finally {
-                setLoading(false);
+                setPageLoading(false);
             }
         };
-        fetchData().finally();
+        fetchData(Number(pk)).finally();
     }, []);
-    const onFormFinish = (val: any) => {
+
+    /**
+     * Form submit to backend api
+     * @param val
+     */
+    const onFormFinish = (val: Product) => {
         val["image"] = imageURL;
         console.log(val);
         instance
-            .post(`api/products/`, val, {
+            .put(`api/products/${pk}/update/`, val, {
                 headers: get_headers(),
             })
-            .then();
-        success();
+            .then((res) => {
+                console.log(res.data);
+                success();
+                setModalOpen(!modalOpen)
+            });
     };
-    const normFile = (e: any) => {
+    const normFile = (e: { fileList: FileList }) => {
         console.log("Upload event:", e);
         if (Array.isArray(e)) {
             return e;
@@ -146,10 +221,10 @@ export const ProductAdd = () => {
 
             <Spin
                 indicator={<LoadingOutlined style={{fontSize: 24}} spin/>}
-                spinning={loading}
+                spinning={pageLoading}
                 tip="Loading..."
             >
-                {loading ? (
+                {pageLoading ? (
                     <div>loading</div>
                 ) : (
                     <div
@@ -168,10 +243,28 @@ export const ProductAdd = () => {
                                 form={form}
                                 onFinish={onFormFinish}
                                 initialValues={{
-                                    created_at: dayjs(),
-                                    updated_at: dayjs(),
+                                    name: item?.name,
+                                    price: item?.price,
+                                    categories: item?.categories,
+                                    supplier: item?.supplier,
+                                    is_valid: item?.is_valid,
+                                    attributes: item?.attributes,
+                                    description: item?.description,
+                                    is_discounted: item?.is_discounted,
+                                    discount_price: item?.is_discounted ? item.discount_price : 0,
+                                    created_at: dayjs(item?.created_at),
+                                    updated_at: dayjs(item?.updated_at),
                                 }}
                             >
+                                <div style={{display: "flex", margin: 20}}>
+                                    <Row gutter={24}>
+                                        <Col span={24}>
+                                            <Typography.Title level={3}>
+                                                {item?.sku}
+                                            </Typography.Title>
+                                        </Col>
+                                    </Row>
+                                </div>
                                 <Divider></Divider>
                                 <Row gutter={16}>
                                     <Col span={12}>
@@ -218,6 +311,7 @@ export const ProductAdd = () => {
                                                 mode="multiple"
                                                 size={"middle"}
                                                 placeholder="Please select"
+                                                // onChange={handleChange}
                                                 showSearch={true}
                                                 style={{width: "100%"}}
                                                 options={categories}
@@ -235,10 +329,11 @@ export const ProductAdd = () => {
                                     <Col span={12}>
                                         <Form.Item name={"attributes"} label="Attributes">
                                             <Select
+                                                showSearch={true}
                                                 mode="multiple"
                                                 size={"middle"}
                                                 placeholder="Please select"
-                                                showSearch={true}
+                                                // onChange={handleChange}
                                                 style={{width: "100%"}}
                                                 options={productAttr}
                                                 onSearch={(value: string) => {
@@ -253,7 +348,7 @@ export const ProductAdd = () => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <Row>
+                                <Row gutter={16}>
                                     <Col span={12}>
                                         <Form.Item name={"supplier"} label="Supplier">
                                             <Select
@@ -265,8 +360,7 @@ export const ProductAdd = () => {
                                                     label: string;
                                                     value: string
                                                 }) =>
-                                                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
-                                            >
+                                                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}>
                                                 {suppliers.map((item: { pk: string; name: string }) => (
                                                     <Select.Option key={item.pk} value={item.pk}>
                                                         {item.name}
@@ -292,7 +386,7 @@ export const ProductAdd = () => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <Divider></Divider>
+                                <Divider/>
                                 <Row gutter={16}>
                                     <Col span={12}>
                                         <Form.Item name={"description"} label={"Description"}>

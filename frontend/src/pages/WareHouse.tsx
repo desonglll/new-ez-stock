@@ -6,8 +6,6 @@ import {ProductList} from "./products/ProductList.tsx";
 import {useEffect, useState} from "react";
 import {Route, Routes, useNavigate} from "react-router-dom";
 import {Dashboard} from "./Dashboard.tsx";
-import {ProductEdit} from "./products/ProductEdit.tsx";
-import {ProductAdd} from "./products/ProductAdd.tsx";
 import {ProductAnalyze} from "./products/ProductAnalyze.tsx";
 import {SupplierList} from "./suppliers/SupplierList.tsx";
 import {SupplierEdit} from "./suppliers/SupplierEdit.tsx";
@@ -77,8 +75,6 @@ export function WareHouse() {
                         <Route path={"/coming"} Component={ComingSoon}></Route>
                         <Route path={"/dashboard"} Component={Dashboard}></Route>
                         <Route path={"/products"} Component={ProductList}></Route>
-                        <Route path={"/products/:pk"} Component={ProductEdit}></Route>
-                        <Route path={"/products/add"} Component={ProductAdd}></Route>
                         <Route
                             path={"/products/analyze"}
                             Component={ProductAnalyze}

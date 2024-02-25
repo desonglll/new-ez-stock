@@ -19,7 +19,7 @@ export function Login() {
                 localStorage.setItem("is_login", "true");
             })
             .then(() => {
-                navigate("/");
+                navigate("/warehouse");
             })
             .catch((err) => {
                 console.log("err", err);
