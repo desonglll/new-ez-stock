@@ -30,7 +30,7 @@ class ProductInlineSerializer(serializers.Serializer):
 class ProductSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name="product_detail", lookup_field='pk')
     owner = UserPublicSerializer(source='user', read_only=True)
-    edit_url = serializers.SerializerMethodField(read_only=True)
+    # edit_url = serializers.SerializerMethodField(read_only=True)
     other_products = ProductInlineSerializer(
         source="user.product_set.all",
         read_only=True,
@@ -43,7 +43,7 @@ class ProductSerializer(serializers.ModelSerializer):
             # 'user',  # hidden user field
             "owner",
             "url",
-            "edit_url",
+            # "edit_url",
             "pk",
             "name",
             "description",
@@ -64,9 +64,9 @@ class ProductSerializer(serializers.ModelSerializer):
             "dimensions",
             "other_products"
         ]
-
-    def get_edit_url(self, obj):
-        request = self.context.get('request')
-        if request is None:
-            return None
-        return reverse("product_update", kwargs={'pk': obj.pk}, request=request)
+    #
+    # def get_edit_url(self, obj):
+    #     request = self.context.get('request')
+    #     if request is None:
+    #         return None
+    #     return reverse("product_detail", kwargs={'pk': obj.pk}, request=request)

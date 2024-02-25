@@ -20,11 +20,7 @@ from rest_framework import generics, status
 from api.models import Result
 
 
-class ProductListCreateAPIView(
-    # UserQuerySetMixin,
-    # StaffEditorPermissionMixin,
-    generics.ListCreateAPIView
-):
+class ProductListCreateAPIView(generics.ListCreateAPIView):
     """
     API view for listing and creating products.
     """
@@ -40,9 +36,9 @@ class ProductListCreateAPIView(
             paginated_response = self.get_paginated_response(serializer.data)
 
             # 计算总页数并添加到响应中
-            count = paginated_response.data.get('count', 0)
-            limit = request.GET.get('limit') or 10  # get limit from request
-            total_pages = count // int(limit) + 1
+            total_items = self.get_queryset().count()
+            limit = self.request.query_params.get('limit') or 10  # get limit from request
+            total_pages = (total_items + int(limit) - 1) // int(limit)
             paginated_response.data['total_pages'] = total_pages
 
             return paginated_response
