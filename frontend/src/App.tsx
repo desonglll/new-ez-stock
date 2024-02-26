@@ -7,6 +7,7 @@ import {Dashboard} from "./pages/Dashboard.tsx";
 import {User} from "./pages/User.tsx";
 import {NewsHouse} from "./pages/NewsHouse.tsx";
 import {Welcome} from "./pages/Welcome.tsx";
+import './App.css'; // 导入样式文件
 
 
 function App() {

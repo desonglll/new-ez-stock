@@ -1,4 +1,4 @@
-import {Button, Card, Drawer, message, Space, Spin, Table, TableColumnsType} from "antd";
+import {Button, Card, Drawer, message, Skeleton, Space, Spin, Table, TableColumnsType} from "antd";
 import {useEffect, useState} from "react";
 import {ProductAttribute} from "../../utils/models.ts";
 import {get_product_attributes} from "../../utils/products.ts";
@@ -71,9 +71,9 @@ export const AttrList = () => {
     return (
         <>
             {contextHolder}
-            <Spin spinning={loadingPage}>
+            <Skeleton loading={loadingPage}>
                 {loadingPage ? (
-                    <div>Loading</div>
+                    <div></div>
                 ) : (
                     <Card>
                         <div>
@@ -95,7 +95,7 @@ export const AttrList = () => {
                         </Drawer>
                     </Card>
                 )}
-            </Spin>
+            </Skeleton>
         </>
     );
 };

@@ -1,6 +1,6 @@
 // OPTIMIZED
 
-import {Button, Drawer, Modal, notification, Spin, Table, TableProps, Tag} from "antd";
+import {Button, Drawer, Modal, notification, Skeleton, Table, TableProps, Tag} from "antd";
 import {Product} from "../../utils/models.ts";
 import React, {Key, useEffect, useState} from "react";
 import {delete_product_by_pk, delete_products, get_products} from "../../utils/products.ts";
@@ -174,8 +174,8 @@ export function ProductList() {
     }
     return (
         <>
-            <Spin spinning={loading}>
-                {loading ? (<div>Loading</div>) : (
+            <Skeleton loading={loading}>
+                {loading ? (<div></div>) : (
                     <>
                         {contextHolder}
                         <Button className={"add_button"} onClick={() => {
@@ -226,7 +226,7 @@ export function ProductList() {
                         </Modal>
                     </>
                 )}
-            </Spin>
+            </Skeleton>
         </>
     );
 }
