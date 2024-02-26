@@ -21,78 +21,86 @@ import {MdTableRows} from "react-icons/md";
 import {CategoryParentList} from "./categories/CategoryParentList.tsx";
 import {CategorySubList} from "./categories/CategorySubList.tsx";
 import {TopMenuBar} from "../components/TopMenuBar.tsx";
+import {Fade,} from "@material-ui/core";
 
 export function WareHouse() {
     const [collapsed, setCollapsed] = useState(false);
     const navigate = useNavigate();
+    const [isLogin, setIsLogin] = useState(false)
 
     useEffect(() => {
         if (localStorage.getItem("is_login") != "true") {
+            console.log(isLogin)
             navigate("/login");
         }
+        setIsLogin(!isLogin)
     }, []);
     return (
         <>
-            <Layout style={{backgroundColor: "transparent"}}>
-                <Header
-                    style={{
-                        backgroundColor: "white",
-                    }}
-                >
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    >
-
-                        <TopMenuBar/>
-                    </div>
-                </Header>
-            </Layout>
-            <Layout style={{backgroundColor: "transparent"}}>
-                <Sider
-                    style={{
-                        backgroundColor: "white",
-                        display: "flex",
-                        flexDirection: "column"
-                    }}
-                    collapsed={collapsed}
-                >
-                    <Button onClick={() => {
-                        setCollapsed(!collapsed)
-                    }}
+            {!isLogin ? (<div></div>) : (
+                <div>
+                    <Layout style={{backgroundColor: "transparent"}}>
+                        <Header
                             style={{
-                                width: "100%"
-                            }}><MdTableRows/>
-                    </Button>
-                    <ProductSideBar/>
+                                backgroundColor: "white",
+                            }}
+                        >
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                }}
+                            >
 
-                </Sider>
-                <Content>
-                    <Routes>
-                        <Route path={"/"} Component={ProductAnalyze}></Route>
-                        <Route path={"/coming"} Component={ComingSoon}></Route>
-                        <Route path={"/dashboard"} Component={Dashboard}></Route>
-                        <Route path={"/products"} Component={ProductList}></Route>
-                        <Route
-                            path={"/products/analyze"}
-                            Component={ProductAnalyze}
-                        ></Route>
-                        <Route path={"/products-attr"} Component={AttrList}></Route>
-                        <Route path={"/products-attr/:pk"} Component={AttrEdit}></Route>
-                        <Route path={"/products-attr/add"} Component={AttrAdd}></Route>
-                        <Route path={"/suppliers"} Component={SupplierList}></Route>
-                        <Route path={"/suppliers/:pk"} Component={SupplierEdit}></Route>
-                        <Route path={"/suppliers/add"} Component={SupplierAdd}></Route>
-                        <Route path={"/categories"} Component={CategoryList}></Route>
-                        <Route path={"/categories/:pk"} Component={CategoryEdit}></Route>
-                        <Route path={"/categories/add"} Component={CategoryAdd}></Route>
-                        <Route path={"/categories/parents"} Component={CategoryParentList}></Route>
-                        <Route path={"/categories/sub"} Component={CategorySubList}></Route>
-                    </Routes>
-                </Content>
-            </Layout>
+                                <TopMenuBar/>
+                            </div>
+                        </Header>
+                    </Layout>
+                    <Fade in={true} timeout={500}>
+                        <Layout style={{backgroundColor: "transparent"}}>
+                            <Sider
+                                style={{
+                                    backgroundColor: "white",
+                                    display: "flex",
+                                    flexDirection: "column"
+                                }}
+                                collapsed={collapsed}
+                            >
+                                <Button onClick={() => {
+                                    setCollapsed(!collapsed)
+                                }}
+                                        style={{
+                                            width: "100%"
+                                        }}><MdTableRows/>
+                                </Button>
+                                <ProductSideBar/>
+
+                            </Sider>
+                            <Content>
+                                <Routes>
+                                    <Route path={"/"} Component={ProductAnalyze}></Route>
+                                    <Route path={"/coming"} Component={ComingSoon}></Route>
+                                    <Route path={"/dashboard"} Component={Dashboard}></Route>
+                                    <Route path={"/products/list"} Component={ProductList}></Route>
+                                    <Route path={"/products/analyze"} Component={ProductAnalyze}></Route>
+                                    <Route path={"/products/products-attr"} Component={AttrList}></Route>
+                                    <Route path={"/products/products-attr/:pk"} Component={AttrEdit}></Route>
+                                    <Route path={"/products/products-attr/add"} Component={AttrAdd}></Route>
+                                    <Route path={"/suppliers"} Component={SupplierList}></Route>
+                                    <Route path={"/suppliers/:pk"} Component={SupplierEdit}></Route>
+                                    <Route path={"/suppliers/add"} Component={SupplierAdd}></Route>
+                                    <Route path={"/categories"} Component={CategoryList}></Route>
+                                    <Route path={"/categories/:pk"} Component={CategoryEdit}></Route>
+                                    <Route path={"/categories/add"} Component={CategoryAdd}></Route>
+                                    <Route path={"/categories/parents"} Component={CategoryParentList}></Route>
+                                    <Route path={"/categories/sub"} Component={CategorySubList}></Route>
+                                </Routes>
+                            </Content>
+                        </Layout>
+                    </Fade>
+                </div>
+            )}
+
         </>
     );
 }

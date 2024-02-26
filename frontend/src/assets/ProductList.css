@@ -1,8 +1,8 @@
-.add_button {
+.addButton {
   margin: 20px;
 }
 
-.delete_button {
+.deleteButton {
   margin: 20px;
 }
 
@@ -12,6 +12,15 @@
 
 .ant-modal-content {
   width: fit-content;
+}
+
+.refreshButton {
+  margin: 20px;
+}
+
+.searchForm {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 /*# sourceMappingURL=ProductList.css.map */

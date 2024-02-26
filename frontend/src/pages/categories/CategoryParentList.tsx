@@ -1,9 +1,10 @@
-import {Button, Card, message, Space, Spin, Table, TableProps, Typography} from "antd";
+import {Button, Card, message, Space, Table, TableProps, Typography} from "antd";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {get_headers} from "../../utils/basic.ts";
 import {useNavigate} from "react-router-dom";
 import {Category} from "../../utils/models.ts";
+import {Fade, Grow} from "@material-ui/core";
 
 export function CategoryParentList() {
     const [parentList, setParentList] = useState([])
@@ -57,8 +58,11 @@ export function CategoryParentList() {
             const data = await instance.get("api/categories/get_parent/", {
                 headers: get_headers()
             })
-            console.log(data.data.data)
-            const listData = data.data.data.map((item: { pk: number; name: string; description: string; }) => ({
+            const listData = data.data.data.map((item: {
+                pk: number;
+                name: string;
+                description: string;
+            }) => ({
                 key: item.pk,
                 name: item.name,
                 description: item.description,
@@ -72,12 +76,10 @@ export function CategoryParentList() {
     return (
         <>
             {contextHolder}
-            <Spin
-                spinning={loading}
-            >
-                {loading ? (
-                    <div>Loading</div>
-                ) : (
+            {loading ? (
+                <div></div>
+            ) : (
+                <Fade in={true} timeout={500}>
                     <Card>
                         <Typography.Paragraph>
                             Parent Categories can not be selected in product edit or add page.
@@ -92,14 +94,17 @@ export function CategoryParentList() {
                                 Add
                             </Button>
                         </div>
-                        <Table
-                            dataSource={parentList}
-                            columns={columns}
-                            pagination={false}
-                        />
+                        <Grow in={true} style={{transformOrigin: '0 0 0'}}
+                              {...({timeout: 1000})}>
+                            <Table
+                                dataSource={parentList}
+                                columns={columns}
+                                pagination={false}
+                            />
+                        </Grow>
                     </Card>
-                )}
-            </Spin>
+                </Fade>
+            )}
         </>
     );
 }

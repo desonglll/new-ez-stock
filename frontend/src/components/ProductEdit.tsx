@@ -173,7 +173,11 @@ export const ProductEdit: React.FC<{
                  */
                 const productAttrResponseData = await get_product_attributes();
                 const product_attr = productAttrResponseData.map(
-                    (item: { name: string; pk: number; value: string }) => ({
+                    (item: {
+                        name: string;
+                        pk: number;
+                        value: string
+                    }) => ({
                         label: item.name,
                         value: item.pk,
                     }),
@@ -210,7 +214,9 @@ export const ProductEdit: React.FC<{
                 refreshData()
             });
     };
-    const normFile = (e: { fileList: FileList }) => {
+    const normFile = (e: {
+        fileList: FileList
+    }) => {
         console.log("Upload event:", e);
         if (Array.isArray(e)) {
             return e;
@@ -358,12 +364,13 @@ export const ProductEdit: React.FC<{
                                                 onSearch={(value: string) => {
                                                     console.log('search:', value);
                                                 }}
-                                                filterOption={(input: string, option?: {
-                                                    label: string;
-                                                    value: string
-                                                }) =>
-                                                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}>
-                                                {suppliers.map((item: { pk: string; name: string }) => (
+                                                filterOption={(input, option) =>
+                                                    ((option && option.children) || '').toString().toLowerCase().includes(input.toLowerCase())
+                                                }>
+                                                {suppliers.map((item: {
+                                                    pk: string;
+                                                    name: string
+                                                }) => (
                                                     <Select.Option key={item.pk} value={item.pk}>
                                                         {item.name}
                                                     </Select.Option>

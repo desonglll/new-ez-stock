@@ -20,7 +20,8 @@ from rest_framework import generics, status
 from api.models import Result
 
 
-class ProductListCreateAPIView(generics.ListCreateAPIView):
+class ProductListCreateAPIView(generics.ListCreateAPIView,
+                               StaffEditorPermissionMixin):
     """
     API view for listing and creating products.
     """
@@ -28,7 +29,7 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = ProductSerializer
 
     def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
+        queryset = self.filter_queryset(self.get_queryset().order_by("-pk"))  # Order by pk descending
 
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -69,7 +70,7 @@ product_list_create_view = ProductListCreateAPIView.as_view()
 
 
 class ProductDetailAPIView(
-    # StaffEditorPermissionMixin,
+    StaffEditorPermissionMixin,
     generics.RetrieveAPIView,
     generics.DestroyAPIView,
     generics.UpdateAPIView

@@ -52,9 +52,9 @@ export function TopMenuBar() {
     };
     useEffect(() => {
         // 在组件初次渲染时设置 defaultSelectedKeys
-        const initialKey = location.pathname
+        const initialKey = location.pathname.split("/")[1]
         if (initialKey != "") {
-            setCurrent(initialKey);
+            setCurrent("/" + initialKey);
         }
     }, [location.pathname]);
 

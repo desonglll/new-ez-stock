@@ -29,6 +29,7 @@ const items: MenuProps["items"] = [
     ]),
 
 ];
+const openKeys = location.pathname.split("/")[2];
 
 export const NewsSideBar = () => {
     const navigate = useNavigate();
@@ -40,7 +41,6 @@ export const NewsSideBar = () => {
     };
 
     useEffect(() => {
-        console.log(location.pathname.slice(6))
         setCurrent(location.pathname);
     }, [location.pathname]);
 
@@ -48,7 +48,7 @@ export const NewsSideBar = () => {
         <>
             <Menu
                 onClick={onClick}
-                defaultOpenKeys={[]}
+                defaultOpenKeys={[openKeys]}
                 mode="inline"
                 items={items}
                 selectedKeys={[current]}

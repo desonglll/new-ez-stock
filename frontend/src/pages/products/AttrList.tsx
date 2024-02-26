@@ -1,4 +1,4 @@
-import {Button, Card, Drawer, message, Skeleton, Space, Spin, Table, TableColumnsType} from "antd";
+import {Button, Card, Drawer, message, Space, Table, TableColumnsType} from "antd";
 import {useEffect, useState} from "react";
 import {ProductAttribute} from "../../utils/models.ts";
 import {get_product_attributes} from "../../utils/products.ts";
@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {get_headers} from "../../utils/basic.ts";
 import {AttrAdd} from "../../components/AttrAdd.tsx";
+import {Fade, Grow} from "@material-ui/core";
 
 
 export const AttrList = () => {
@@ -71,17 +72,20 @@ export const AttrList = () => {
     return (
         <>
             {contextHolder}
-            <Skeleton loading={loadingPage}>
-                {loadingPage ? (
-                    <div></div>
-                ) : (
+            {loadingPage ? (
+                <div></div>
+            ) : (
+                <Fade in={true} timeout={500}>
                     <Card>
                         <div>
                             <Button style={{marginBottom: 18}} onClick={() => {
                                 setDrawerOpen(!drawerOpen)
                             }}>Add</Button>
                         </div>
-                        <Table dataSource={attributes} columns={columns} rowKey={"pk"}/>
+                        <Grow in={true} style={{transformOrigin: '0 0 0'}}
+                              {...({timeout: 1000})}>
+                            <Table dataSource={attributes} columns={columns} rowKey={"pk"}/>
+                        </Grow>
                         <Drawer
                             open={drawerOpen}
                             size={"large"}
@@ -94,8 +98,8 @@ export const AttrList = () => {
                             <AttrAdd/>
                         </Drawer>
                     </Card>
-                )}
-            </Skeleton>
+                </Fade>
+            )}
         </>
     );
 };

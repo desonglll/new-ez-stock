@@ -9,6 +9,7 @@ import {NewsAdd} from "./news/NewsAdd.tsx";
 import {useState} from "react";
 import {MdTableRows} from "react-icons/md";
 import {TopMenuBar} from "../components/TopMenuBar.tsx";
+import {Fade} from "@material-ui/core";
 
 export function NewsHouse() {
     const [collapsed, setCollapsed] = useState(false);
@@ -31,26 +32,28 @@ export function NewsHouse() {
                     </div>
                 </Header>
             </Layout>
-            <Layout style={{backgroundColor: "white"}}>
-                <Sider style={{backgroundColor: "transparent"}} collapsed={collapsed}
-                >
-                    <Button onClick={() => {
-                        setCollapsed(!collapsed)
-                    }}
-                            style={{
-                                width: "100%"
-                            }}><MdTableRows/>
-                    </Button>
-                    <NewsSideBar/>
-                </Sider>
-                <Content>
-                    <Routes>
-                        <Route path={"/"} Component={NewsList}></Route>
-                        <Route path={"/:id/"} Component={NewsDetail}></Route>
-                        <Route path={"/add/"} Component={NewsAdd}></Route>
-                    </Routes>
-                </Content>
-            </Layout>
+            <Fade in={true} timeout={500}>
+                <Layout style={{backgroundColor: "white"}}>
+                    <Sider style={{backgroundColor: "transparent"}} collapsed={collapsed}
+                    >
+                        <Button onClick={() => {
+                            setCollapsed(!collapsed)
+                        }}
+                                style={{
+                                    width: "100%"
+                                }}><MdTableRows/>
+                        </Button>
+                        <NewsSideBar/>
+                    </Sider>
+                    <Content>
+                        <Routes>
+                            <Route path={"/"} Component={NewsList}></Route>
+                            <Route path={"/:id/"} Component={NewsDetail}></Route>
+                            <Route path={"/add/"} Component={NewsAdd}></Route>
+                        </Routes>
+                    </Content>
+                </Layout>
+            </Fade>
         </>
     );
 }

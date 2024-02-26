@@ -1,9 +1,10 @@
-import {Button, Card, message, Space, Spin, Table, TableProps, Typography} from "antd";
+import {Button, Card, message, Space, Table, TableProps, Typography} from "antd";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {get_headers} from "../../utils/basic.ts";
 import {useNavigate} from "react-router-dom";
 import {Category} from "../../utils/models.ts";
+import {Fade, Grow} from "@material-ui/core";
 
 export function CategorySubList() {
     const [subList, setSubList] = useState([])
@@ -62,7 +63,6 @@ export function CategorySubList() {
             const resData = await instance.get("api/categories/get_sub/", {
                 headers: get_headers()
             })
-            console.log(resData.data.data)
 
             const listData = resData.data.data.map((item: {
                 pk: number;
@@ -84,34 +84,35 @@ export function CategorySubList() {
     return (
         <>
             {contextHolder}
-                <Spin
-                    spinning={loading}
-                >
-                    {loading ? (
-                        <div>Loading</div>
-                    ) : (
-                        <Card>
-                            <Typography.Paragraph>
-                                SubCategories can be selected in product edit or add page.
-                            </Typography.Paragraph>
-                            <div>
-                                <Button
-                                    style={{marginBottom: 16}}
-                                    onClick={() => {
-                                        navigate("/warehouse/categories/add");
-                                    }}
-                                >
-                                    Add
-                                </Button>
-                            </div>
+            {loading ? (
+                <div></div>
+            ) : (
+                <Fade in={true} timeout={500}>
+                    <Card>
+                        <Typography.Paragraph>
+                            SubCategories can be selected in product edit or add page.
+                        </Typography.Paragraph>
+                        <div>
+                            <Button
+                                style={{marginBottom: 16}}
+                                onClick={() => {
+                                    navigate("/warehouse/categories/add");
+                                }}
+                            >
+                                Add
+                            </Button>
+                        </div>
+                        <Grow in={true} style={{transformOrigin: '0 0 0'}}
+                              {...({timeout: 1000})}>
                             <Table
                                 dataSource={subList}
                                 columns={columns}
                                 pagination={false}
                             />
-                        </Card>
-                    )}
-                </Spin>
+                        </Grow>
+                    </Card>
+                </Fade>
+            )}
         </>
     )
         ;

@@ -56,17 +56,29 @@ export const getProductInfo = async () => {
 };
 
 // done
-export const get_products = async (page: number, pageSize: number) => {
+export const get_products = async (page: number, pageSize: number, searchField: string = "null") => {
     const instance = axios.create();
     try {
-        const response = await instance.get(`api/products/`, {
-            params: {
-                offset: (page - 1) * pageSize,
-                limit: pageSize
-            },
-            headers: get_headers()
-        })
-        return response.data
+        if (searchField != "null") {
+            const response = await instance.get(`/api/search/?q=${searchField}`, {
+                headers: get_headers(),
+                params: {
+                    limit: pageSize,
+                    offset: (page - 1) * pageSize,
+                },
+            });
+            return response.data
+        } else {
+            const response = await instance.get(`api/products/`, {
+                params: {
+                    offset: (page - 1) * pageSize,
+                    limit: pageSize
+                },
+                headers: get_headers()
+            })
+            return response.data
+        }
+
     } catch (err: any) {
         console.log(err as AxiosError);
         return err.response

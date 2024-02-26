@@ -25,9 +25,9 @@ function getItem(
 }
 
 const items: MenuProps["items"] = [
-    getItem("Products", "sub1", <HiTemplate/>, [
-        getItem("Product List", "/warehouse/products"),
-        getItem("Attributes", "/warehouse/products-attr")
+    getItem("Products", "products", <HiTemplate/>, [
+        getItem("Product List", "/warehouse/products/list"),
+        getItem("Attributes", "/warehouse/products/products-attr")
     ]),
     getItem("Suppliers", "/warehouse/suppliers", <FaPersonHiking/>),
     getItem("Categories", "categories", <BiCategory/>,
@@ -37,6 +37,7 @@ const items: MenuProps["items"] = [
         ]
     )
 ];
+const openKeys = location.pathname.split("/")[2];
 
 export const ProductSideBar = () => {
     const navigate = useNavigate();
@@ -55,7 +56,7 @@ export const ProductSideBar = () => {
         <>
             <Menu
                 onClick={onClick}
-                defaultOpenKeys={[]}
+                defaultOpenKeys={[openKeys]}
                 mode="inline"
                 items={items}
                 selectedKeys={[current]}

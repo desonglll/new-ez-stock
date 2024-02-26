@@ -64,7 +64,9 @@ export const ProductAdd: React.FC<ProductAddProps> = ({drawerOpen, setDrawerOpen
         headers: {
             Authorization: `Bearer ${get_local_access_code()}`,
         },
-        onChange(event: UploadChangeParam<UploadFile<{ image_url: string }>>) {
+        onChange(event: UploadChangeParam<UploadFile<{
+            image_url: string
+        }>>) {
             if (event.file && event.file.response && event.file.response.image_url) {
                 setImageURL(event.file.response.image_url);
                 setImagePreviewURL(event.file.response.image_url);
@@ -116,7 +118,11 @@ export const ProductAdd: React.FC<ProductAddProps> = ({drawerOpen, setDrawerOpen
                  */
                 const productAttrResponseData = await get_product_attributes();
                 const product_attr = productAttrResponseData.map(
-                    (item: { name: string; pk: number; value: string }) => ({
+                    (item: {
+                        name: string;
+                        pk: number;
+                        value: string
+                    }) => ({
                         label: item.name,
                         value: item.pk,
                     }),
@@ -141,7 +147,9 @@ export const ProductAdd: React.FC<ProductAddProps> = ({drawerOpen, setDrawerOpen
             .then();
         success();
     };
-    const normFile = (e: { fileList: FileList }) => {
+    const normFile = (e: {
+        fileList: FileList
+    }) => {
         console.log("Upload event:", e);
         if (Array.isArray(e)) {
             return e;
@@ -152,217 +160,219 @@ export const ProductAdd: React.FC<ProductAddProps> = ({drawerOpen, setDrawerOpen
     return (
         <>
             {contextHolder}
-            <Card>
-                <Form
-                    labelCol={{span: 9}}
-                    wrapperCol={{span: 14}}
-                    layout="horizontal"
-                    form={form}
-                    onFinish={onFormFinish}
-                    initialValues={{
-                        created_at: dayjs(),
-                        updated_at: dayjs(),
-                    }}
-                >
-                    <Divider></Divider>
-                    <Row gutter={16}>
-                        <Col span={12}>
-                            <Form.Item
-                                label="Name"
-                                name="name"
-                                rules={[
-                                    {required: true, message: "Please enter the name!"},
-                                ]}
-                            >
-                                <Input placeholder="Enter the name"/>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                label="Price"
-                                name="price"
-                                rules={[{message: "Please enter the price!"}]}
-                            >
-                                <Input
-                                    prefix="￥"
-                                    suffix="RMB"
-                                    placeholder="Enter the price"
-                                />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col span={12}>
-                            <Form.Item label="Created At" name="created_at">
-                                <DatePicker showTime disabled/>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item label="Updated At" name={"updated_at"}>
-                                <DatePicker showTime/>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col span={12}>
-                            <Form.Item name={"categories"} label="Categories">
-                                <Select
-                                    mode="multiple"
-                                    size={"middle"}
-                                    placeholder="Please select"
-                                    showSearch={true}
-                                    style={{width: "100%"}}
-                                    options={categories}
-                                    onSearch={(value: string) => {
-                                        console.log('search:', value);
-                                    }}
-                                    filterOption={(input: string, option?: {
-                                        label: string;
-                                        value: string
-                                    }) =>
-                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item name={"attributes"} label="Attributes">
-                                <Select
-                                    mode="multiple"
-                                    size={"middle"}
-                                    placeholder="Please select"
-                                    showSearch={true}
-                                    style={{width: "100%"}}
-                                    options={productAttr}
-                                    onSearch={(value: string) => {
-                                        console.log('search:', value);
-                                    }}
-                                    filterOption={(input: string, option?: {
-                                        label: string;
-                                        value: string
-                                    }) =>
-                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
-                                />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={12}>
-                            <Form.Item name={"supplier"} label="Supplier">
-                                <Select
-                                    showSearch={true}
-                                    onSearch={(value: string) => {
-                                        console.log('search:', value);
-                                    }}
-                                    filterOption={(input: string, option?: {
-                                        label: string;
-                                        value: string
-                                    }) =>
-                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
+                <Card>
+                    <Form
+                        labelCol={{span: 9}}
+                        wrapperCol={{span: 14}}
+                        layout="horizontal"
+                        form={form}
+                        onFinish={onFormFinish}
+                        initialValues={{
+                            created_at: dayjs(),
+                            updated_at: dayjs(),
+                        }}
+                    >
+                        <Divider></Divider>
+                        <Row gutter={16}>
+                            <Col span={12}>
+                                <Form.Item
+                                    label="Name"
+                                    name="name"
+                                    rules={[
+                                        {required: true, message: "Please enter the name!"},
+                                    ]}
                                 >
-                                    {suppliers.map((item: { pk: string; name: string }) => (
-                                        <Select.Option key={item.pk} value={item.pk}>
-                                            {item.name}
-                                        </Select.Option>
-                                    ))}
-                                </Select>
+                                    <Input placeholder="Enter the name"/>
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item
+                                    label="Price"
+                                    name="price"
+                                    rules={[{message: "Please enter the price!"}]}
+                                >
+                                    <Input
+                                        prefix="￥"
+                                        suffix="RMB"
+                                        placeholder="Enter the price"
+                                    />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={16}>
+                            <Col span={12}>
+                                <Form.Item label="Created At" name="created_at">
+                                    <DatePicker showTime disabled/>
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item label="Updated At" name={"updated_at"}>
+                                    <DatePicker showTime/>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={16}>
+                            <Col span={12}>
+                                <Form.Item name={"categories"} label="Categories">
+                                    <Select
+                                        mode="multiple"
+                                        size={"middle"}
+                                        placeholder="Please select"
+                                        showSearch={true}
+                                        style={{width: "100%"}}
+                                        options={categories}
+                                        onSearch={(value: string) => {
+                                            console.log('search:', value);
+                                        }}
+                                        filterOption={(input: string, option?: {
+                                            label: string;
+                                            value: string
+                                        }) =>
+                                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
+                                    />
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item name={"attributes"} label="Attributes">
+                                    <Select
+                                        mode="multiple"
+                                        size={"middle"}
+                                        placeholder="Please select"
+                                        showSearch={true}
+                                        style={{width: "100%"}}
+                                        options={productAttr}
+                                        onSearch={(value: string) => {
+                                            console.log('search:', value);
+                                        }}
+                                        filterOption={(input: string, option?: {
+                                            label: string;
+                                            value: string
+                                        }) =>
+                                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
+                                    />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={12}>
+                                <Form.Item name={"supplier"} label="Supplier">
+                                    <Select
+                                        showSearch={true}
+                                        onSearch={(value: string) => {
+                                            console.log('search:', value);
+                                        }}
+                                        filterOption={(input, option) =>
+                                            ((option && option.children) || '').toString().toLowerCase().includes(input.toLowerCase())
+                                        }>
+                                        {suppliers.map((item: {
+                                            pk: string;
+                                            name: string
+                                        }) => (
+                                            <Select.Option key={item.pk} value={item.pk}>
+                                                {item.name}
+                                            </Select.Option>
+                                        ))}
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+
+                            <Col span={12}>
+                                <Form.Item
+                                    label="Image"
+                                    name="image"
+                                    // 以下两条是必须的
+                                    valuePropName="fileList"
+                                    // 如果没有下面这一句会报错
+                                    getValueFromEvent={normFile}
+                                >
+                                    <Upload {...props}>
+                                        <Button icon={<UploadOutlined/>}>
+                                            Click to Upload
+                                        </Button>
+                                    </Upload>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Divider></Divider>
+                        <Row gutter={16}>
+                            <Col span={12}>
+                                <Form.Item name={"description"} label={"Description"}>
+                                    <TextArea
+                                        showCount
+                                        maxLength={100}
+                                        // onChange={onChange}
+                                        placeholder="disable resize"
+                                        style={{height: 120, resize: "none"}}
+                                    />
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Row>
+                                    <Col span={9}></Col>
+                                    <div style={{width: 120, height: 120}}>
+                                        {imagePreviewURL === "" ? (
+                                            <div>Noo image</div>
+                                        ) : (
+                                            <Image
+                                                width={120}
+                                                height={120}
+                                                src={imagePreviewURL}
+                                            />
+                                        )}
+                                    </div>
+                                </Row>
+                            </Col>
+                        </Row>
+                        <Row gutter={16}>
+                            <Col span={12}>
+                                <Form.Item
+                                    name={"is_valid"}
+                                    label="Is Valid"
+                                    valuePropName="checked"
+                                    style={{width: 500}}
+                                >
+                                    <Switch
+                                        checkedChildren={<CheckOutlined/>}
+                                        unCheckedChildren={<CloseOutlined/>}
+                                    />
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item name={"is_discounted"} label="Is Discounted">
+                                    <Switch
+                                        checkedChildren={<CheckOutlined/>}
+                                        unCheckedChildren={<CloseOutlined/>}
+                                        onChange={(e: boolean) => {
+                                            console.log(e);
+                                            setIsDiscount(e);
+                                        }}
+                                    />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        {isDiscount ? (
+                            <Form.Item name={"discount_price"} label={"Discount Price"}>
+                                <Input prefix="￥" suffix="RMB"/>
                             </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                label="Image"
-                                name="image"
-                                // 以下两条是必须的
-                                valuePropName="fileList"
-                                // 如果没有下面这一句会报错
-                                getValueFromEvent={normFile}
-                            >
-                                <Upload {...props}>
-                                    <Button icon={<UploadOutlined/>}>
-                                        Click to Upload
-                                    </Button>
-                                </Upload>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Divider></Divider>
-                    <Row gutter={16}>
-                        <Col span={12}>
-                            <Form.Item name={"description"} label={"Description"}>
-                                <TextArea
-                                    showCount
-                                    maxLength={100}
-                                    // onChange={onChange}
-                                    placeholder="disable resize"
-                                    style={{height: 120, resize: "none"}}
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Row>
-                                <Col span={9}></Col>
-                                <div style={{width: 120, height: 120}}>
-                                    {imagePreviewURL === "" ? (
-                                        <div>Noo image</div>
-                                    ) : (
-                                        <Image
-                                            width={120}
-                                            height={120}
-                                            src={imagePreviewURL}
-                                        />
-                                    )}
-                                </div>
-                            </Row>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col span={12}>
-                            <Form.Item
-                                name={"is_valid"}
-                                label="Is Valid"
-                                valuePropName="checked"
-                                style={{width: 500}}
-                            >
-                                <Switch
-                                    checkedChildren={<CheckOutlined/>}
-                                    unCheckedChildren={<CloseOutlined/>}
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item name={"is_discounted"} label="Is Discounted">
-                                <Switch
-                                    checkedChildren={<CheckOutlined/>}
-                                    unCheckedChildren={<CloseOutlined/>}
-                                    onChange={(e: boolean) => {
-                                        console.log(e);
-                                        setIsDiscount(e);
+                        ) : null}
+                        <Form.Item label={"Actions"}>
+                            <Space>
+                                <Button type="primary" htmlType="submit">
+                                    Submit
+                                </Button>
+                                <Button
+                                    htmlType="button"
+                                    onClick={() => {
+                                        form.resetFields();
                                     }}
-                                />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    {isDiscount ? (
-                        <Form.Item name={"discount_price"} label={"Discount Price"}>
-                            <Input prefix="￥" suffix="RMB"/>
+                                >
+                                    Reset
+                                </Button>
+                            </Space>
                         </Form.Item>
-                    ) : null}
-                    <Form.Item label={"Actions"}>
-                        <Space>
-                            <Button type="primary" htmlType="submit">
-                                Submit
-                            </Button>
-                            <Button
-                                htmlType="button"
-                                onClick={() => {
-                                    form.resetFields();
-                                }}
-                            >
-                                Reset
-                            </Button>
-                        </Space>
-                    </Form.Item>
-                </Form>
-            </Card>
+                    </Form>
+                </Card>
         </>
-    );
+    )
+        ;
 };

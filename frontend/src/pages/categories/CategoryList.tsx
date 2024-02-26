@@ -1,4 +1,4 @@
-import {Button, Card, message, Space, Spin, Table, TableProps, Tag} from "antd";
+import {Button, Card, message, Space, Table, TableProps, Tag} from "antd";
 import * as React from "react";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
@@ -7,17 +7,18 @@ import {get_headers} from "../../utils/basic.ts";
 import {Category} from "../../utils/models.ts";
 import {getCategories} from "../../utils/categories.ts";
 import {CheckCircleOutlined, CloseCircleOutlined} from "@ant-design/icons";
+import {Fade} from "@material-ui/core";
 
 export const CategoryList = () => {
     const navigate = useNavigate();
     const [messageApi, contextHolder] = message.useMessage();
     const [loadingPage, setLoadingPage] = useState(true);
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-    const handleEdit = (event: any) => {
+    const handleEdit = (event: Category) => {
         console.log(event);
         navigate(`/warehouse/categories/${event.pk}`);
     };
-    const handleDelete = (event: any) => {
+    const handleDelete = (event: Category) => {
         console.log(event);
         const instance = axios.create();
         instance
@@ -66,7 +67,7 @@ export const CategoryList = () => {
                     value: false,
                 },
             ],
-            onFilter: (value: any, record) => {
+            onFilter: (value: boolean | React.Key, record) => {
                 if (value === true)
                     return record.parent === null
                 else
@@ -112,11 +113,11 @@ export const CategoryList = () => {
     }, []);
     return (
         <>
-            <Spin spinning={loadingPage}>
-                {contextHolder}
-                {loadingPage ? (
-                    <div>Loading</div>
-                ) : (
+            {contextHolder}
+            {loadingPage ? (
+                <div></div>
+            ) : (
+                <Fade in={true} timeout={500}>
                     <Card style={{margin: 16}}>
                         <div>
                             <Button
@@ -138,8 +139,8 @@ export const CategoryList = () => {
                             />
                         </Card>
                     </Card>
-                )}
-            </Spin>
+                </Fade>
+            )}
         </>
     );
 };

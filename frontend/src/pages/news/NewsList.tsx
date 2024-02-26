@@ -1,9 +1,10 @@
-import {Button, Card, Space, Spin, Table, TableProps} from "antd";
+import {Button, Card, Space, Table, TableProps} from "antd";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {get_headers} from "../../utils/basic.ts";
 import {News} from "../../utils/models.ts";
 import {useNavigate} from "react-router-dom";
+import {Fade, Grow} from "@material-ui/core";
 
 
 export function NewsList() {
@@ -41,7 +42,6 @@ export function NewsList() {
             const data = await instance.get("api/news/", {
                 headers: get_headers()
             })
-            console.log(data.data.data)
             const news_data = data.data.data.map((item: {
                 id: number;
                 author: number;
@@ -71,25 +71,28 @@ export function NewsList() {
     }
     return (
         <>
-            <Spin spinning={loading}>
-                {loading ? (
-                    <div>Loading</div>
-                ) : (
+            {loading ? (
+                <div></div>
+            ) : (
+                <Fade in={true} timeout={500}>
                     <Card>
                         <div style={{marginBottom: 18}}>
                             <Button onClick={handleAdd}>
                                 Add
                             </Button>
                         </div>
-                        <Table
-                            columns={columns}
-                            dataSource={newsList}
-                            pagination={false}
-                        />
+                        <Grow in={true} style={{transformOrigin: '0 0 0'}}
+                              {...({timeout: 1000})}>
+                            <Table
+                                columns={columns}
+                                dataSource={newsList}
+                                pagination={false}
+                            />
+                        </Grow>
                     </Card>
-                )}
+                </Fade>
+            )}
 
-            </Spin>
 
         </>
     );

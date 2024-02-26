@@ -1,6 +1,7 @@
 import {Button, Card, Form, Input} from "antd";
 import {fetchToken} from "../utils/token.ts";
 import {useNavigate} from "react-router-dom";
+import {Fade} from "@material-ui/core";
 
 export function Login() {
     const [form] = Form.useForm();
@@ -11,7 +12,10 @@ export function Login() {
         email: string;
     }) => {
         fetchToken(val.username, val.password)
-            .then((data: { refresh: string; access: string }) => {
+            .then((data: {
+                refresh: string;
+                access: string
+            }) => {
                 console.log("refresh: ", data.refresh);
                 console.log("access: ", data.access);
                 localStorage.setItem("refresh", data["refresh"]);
@@ -33,37 +37,39 @@ export function Login() {
     };
     return (
         <>
-            <div
-                style={{
-                    height: "100vh",
-                    width: "100vw",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
-                <Card style={{width: 300}}>
-                    <Form onFinish={onLoginFinish} layout={"vertical"} form={form}>
-                        <Form.Item name={"username"} label={"UserName"}>
-                            <Input/>
-                        </Form.Item>
-                        <Form.Item name={"password"} label={"Password"}>
-                            <Input type={"password"}/>
-                        </Form.Item>
-                        <Form.Item>
-                            <Button htmlType={"submit"} type={"primary"}>
-                                Login
-                            </Button>
-                            <Button htmlType="button" onClick={onReset}>
-                                Reset
-                            </Button>
-                            <Button type="link" htmlType="button" onClick={onFill}>
-                                Fill form
-                            </Button>
-                        </Form.Item>
-                    </Form>
-                </Card>
-            </div>
+            <Fade in={true} timeout={2000}>
+                <div
+                    style={{
+                        height: "100vh",
+                        width: "100vw",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    <Card style={{width: 300}}>
+                        <Form onFinish={onLoginFinish} layout={"vertical"} form={form}>
+                            <Form.Item name={"username"} label={"UserName"}>
+                                <Input/>
+                            </Form.Item>
+                            <Form.Item name={"password"} label={"Password"}>
+                                <Input type={"password"}/>
+                            </Form.Item>
+                            <Form.Item>
+                                <Button htmlType={"submit"} type={"primary"}>
+                                    Login
+                                </Button>
+                                <Button htmlType="button" onClick={onReset}>
+                                    Reset
+                                </Button>
+                                <Button type="link" htmlType="button" onClick={onFill}>
+                                    Fill form
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                    </Card>
+                </div>
+            </Fade>
         </>
     );
 }
