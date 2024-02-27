@@ -1,6 +1,6 @@
 import {Button, Layout} from "antd";
 import Sider from "antd/es/layout/Sider";
-import {Content, Header,} from "antd/es/layout/layout";
+import {Content,} from "antd/es/layout/layout";
 import {ProductSideBar} from "../components/ProductSideBar.tsx";
 import {ProductList} from "./products/ProductList.tsx";
 import {useEffect, useState} from "react";
@@ -20,8 +20,7 @@ import {AttrAdd} from "../components/AttrAdd.tsx";
 import {MdTableRows} from "react-icons/md";
 import {CategoryParentList} from "./categories/CategoryParentList.tsx";
 import {CategorySubList} from "./categories/CategorySubList.tsx";
-import {TopMenuBar} from "../components/TopMenuBar.tsx";
-import {Fade,} from "@material-ui/core";
+import {Fade, Grow,} from "@material-ui/core";
 
 export function WareHouse() {
     const [collapsed, setCollapsed] = useState(false);
@@ -39,25 +38,9 @@ export function WareHouse() {
         <>
             {!isLogin ? (<div></div>) : (
                 <div>
-                    <Layout style={{backgroundColor: "transparent"}}>
-                        <Header
-                            style={{
-                                backgroundColor: "white",
-                            }}
-                        >
-                            <div
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                }}
-                            >
-
-                                <TopMenuBar/>
-                            </div>
-                        </Header>
-                    </Layout>
                     <Fade in={true} timeout={500}>
                         <Layout style={{backgroundColor: "transparent"}}>
+
                             <Sider
                                 style={{
                                     backgroundColor: "white",
@@ -76,26 +59,29 @@ export function WareHouse() {
                                 <ProductSideBar/>
 
                             </Sider>
-                            <Content>
-                                <Routes>
-                                    <Route path={"/"} Component={ProductAnalyze}></Route>
-                                    <Route path={"/coming"} Component={ComingSoon}></Route>
-                                    <Route path={"/dashboard"} Component={Dashboard}></Route>
-                                    <Route path={"/products/list"} Component={ProductList}></Route>
-                                    <Route path={"/products/analyze"} Component={ProductAnalyze}></Route>
-                                    <Route path={"/products/products-attr"} Component={AttrList}></Route>
-                                    <Route path={"/products/products-attr/:pk"} Component={AttrEdit}></Route>
-                                    <Route path={"/products/products-attr/add"} Component={AttrAdd}></Route>
-                                    <Route path={"/suppliers"} Component={SupplierList}></Route>
-                                    <Route path={"/suppliers/:pk"} Component={SupplierEdit}></Route>
-                                    <Route path={"/suppliers/add"} Component={SupplierAdd}></Route>
-                                    <Route path={"/categories"} Component={CategoryList}></Route>
-                                    <Route path={"/categories/:pk"} Component={CategoryEdit}></Route>
-                                    <Route path={"/categories/add"} Component={CategoryAdd}></Route>
-                                    <Route path={"/categories/parents"} Component={CategoryParentList}></Route>
-                                    <Route path={"/categories/sub"} Component={CategorySubList}></Route>
-                                </Routes>
-                            </Content>
+                            <Grow in={true} style={{transformOrigin: '0 0 0'}}
+                                  {...({timeout: 1000})}>
+                                <Content>
+                                    <Routes>
+                                        <Route path={"/"} Component={ProductAnalyze}></Route>
+                                        <Route path={"/coming"} Component={ComingSoon}></Route>
+                                        <Route path={"/dashboard"} Component={Dashboard}></Route>
+                                        <Route path={"/products/list"} Component={ProductList}></Route>
+                                        <Route path={"/products/analyze"} Component={ProductAnalyze}></Route>
+                                        <Route path={"/products/products-attr"} Component={AttrList}></Route>
+                                        <Route path={"/products/products-attr/:pk"} Component={AttrEdit}></Route>
+                                        <Route path={"/products/products-attr/add"} Component={AttrAdd}></Route>
+                                        <Route path={"/suppliers"} Component={SupplierList}></Route>
+                                        <Route path={"/suppliers/:pk"} Component={SupplierEdit}></Route>
+                                        <Route path={"/suppliers/add"} Component={SupplierAdd}></Route>
+                                        <Route path={"/categories"} Component={CategoryList}></Route>
+                                        <Route path={"/categories/:pk"} Component={CategoryEdit}></Route>
+                                        <Route path={"/categories/add"} Component={CategoryAdd}></Route>
+                                        <Route path={"/categories/parents"} Component={CategoryParentList}></Route>
+                                        <Route path={"/categories/sub"} Component={CategorySubList}></Route>
+                                    </Routes>
+                                </Content>
+                            </Grow>
                         </Layout>
                     </Fade>
                 </div>

@@ -23,7 +23,7 @@ export function Login() {
                 localStorage.setItem("is_login", "true");
             })
             .then(() => {
-                navigate("/warehouse");
+                navigate("/workspace/warehouse");
             })
             .catch((err) => {
                 console.log("err", err);

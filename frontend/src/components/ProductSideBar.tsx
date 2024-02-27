@@ -26,18 +26,18 @@ function getItem(
 
 const items: MenuProps["items"] = [
     getItem("Products", "products", <HiTemplate/>, [
-        getItem("Product List", "/warehouse/products/list"),
-        getItem("Attributes", "/warehouse/products/products-attr")
+        getItem("Product List", "/workspace/warehouse/products/list"),
+        getItem("Attributes", "/workspace/warehouse/products/products-attr")
     ]),
-    getItem("Suppliers", "/warehouse/suppliers", <FaPersonHiking/>),
+    getItem("Suppliers", "/workspace/warehouse/suppliers", <FaPersonHiking/>),
     getItem("Categories", "categories", <BiCategory/>,
         [
-            getItem("Parents", "/warehouse/categories/parents", <BiCategory/>),
-            getItem("SubCate", "/warehouse/categories/sub", <BiCategory/>)
+            getItem("Parents", "/workspace/warehouse/categories/parents", <BiCategory/>),
+            getItem("SubCate", "/workspace/warehouse/categories/sub", <BiCategory/>)
         ]
     )
 ];
-const openKeys = location.pathname.split("/")[2];
+const openKeys = location.pathname.split("/")[3];
 
 export const ProductSideBar = () => {
     const navigate = useNavigate();

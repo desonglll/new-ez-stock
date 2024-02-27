@@ -10,17 +10,17 @@ import {FaRegNewspaper} from "react-icons/fa";
 const items: MenuProps["items"] = [
     {
         label: "WareHouse",
-        key: "/warehouse",
+        key: "/workspace/warehouse",
         icon: <LuWarehouse/>,
     },
     {
         label: "News",
-        key: "/news",
+        key: "/workspace/news",
         icon: <FaRegNewspaper/>,
     },
     {
         label: "User",
-        key: "/user",
+        key: "/workspace/user",
         icon: <FaRegCircleUser/>,
     },
     {
@@ -52,9 +52,9 @@ export function TopMenuBar() {
     };
     useEffect(() => {
         // 在组件初次渲染时设置 defaultSelectedKeys
-        const initialKey = location.pathname.split("/")[1]
+        const initialKey = location.pathname.split("/")[2]
         if (initialKey != "") {
-            setCurrent("/" + initialKey);
+            setCurrent("/workspace/" + initialKey);
         }
     }, [location.pathname]);
 

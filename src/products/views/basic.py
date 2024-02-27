@@ -152,7 +152,6 @@ class ProductDestroyMultipleAPIView(
         # 获取前端传递的 pk 数组
         pk_list = request.data.get("delete_list", [])
 
-        print(pk_list)
         # 存储被删除的产品信息
         deleted_products = []
 
