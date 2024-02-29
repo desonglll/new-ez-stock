@@ -16,7 +16,7 @@ def generate_default_sku():
 
 class ProductAttribute(models.Model):
     """Represents an attribute associated with a product."""
-    name = models.CharField(max_length=255, unique=True, verbose_name='属性名称')
+    name = models.CharField(max_length=255, verbose_name='属性名称')
     value = models.CharField(max_length=255, verbose_name='属性值')
 
     class Meta:
