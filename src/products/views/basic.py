@@ -20,8 +20,11 @@ from rest_framework import generics, status
 from api.models import Result
 
 
-class ProductListCreateAPIView(generics.ListCreateAPIView,
-                               StaffEditorPermissionMixin):
+class ProductListCreateAPIView(
+    StaffEditorPermissionMixin,
+    UserQuerySetMixin,
+    generics.ListCreateAPIView
+):
     """
     API view for listing and creating products.
     """

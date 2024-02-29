@@ -61,13 +61,12 @@ class ProductManager(models.Manager):
 
 class Product(models.Model):
     """Represents a product in the inventory."""
-    user = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL, verbose_name='谁可见')
+    user = models.OneToOneField(User, default=1, null=True, on_delete=models.SET_NULL, verbose_name='谁可见')
 
     # 基本信息
     name = models.CharField(max_length=255, verbose_name='产品名称')
     description = models.TextField(blank=True, null=True, verbose_name='产品描述')
     sku = models.CharField(max_length=50, unique=True, default=generate_default_sku, verbose_name='SKU 编号')
-    # image = models.ImageField(upload_to='images/%Y/%m/%d/%H/%M/', blank=True, null=True, verbose_name='产品图片')
     image = models.CharField(max_length=255, blank=True, null=True, verbose_name='产品图片')
 
     # 价格和销售信息
@@ -95,8 +94,8 @@ class Product(models.Model):
                                         verbose_name='产品属性')
 
     # 供应商信息
-    supplier = models.ForeignKey('suppliers.Supplier', on_delete=models.SET_NULL, null=True, blank=True,
-                                 verbose_name='供应商')
+    supplier = models.OneToOneField('suppliers.Supplier', on_delete=models.SET_NULL, null=True, blank=True,
+                                    verbose_name='供应商')
 
     # 库存属性
     weight = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, verbose_name='重量')

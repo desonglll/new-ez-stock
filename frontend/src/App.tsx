@@ -4,6 +4,7 @@ import {Login} from "./pages/Login.tsx";
 import './App.css';
 import {WorkSpace} from "./pages/WorkSpace.tsx";
 import {Welcome} from "./pages/Welcome.tsx";
+import {SignUp} from "./pages/SignUp.tsx";
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
                 <Routes>
                     <Route path="/workspace/*" element={<WorkSpace/>}/>
                     <Route path="/login" element={<Login/>}/>
+                    <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/welcome" element={<Welcome/>}/>
                     <Route path="/" element={<Welcome/>}/>
                 </Routes>

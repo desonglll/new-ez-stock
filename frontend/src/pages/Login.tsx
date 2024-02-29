@@ -2,6 +2,7 @@ import {Button, Card, Form, Input} from "antd";
 import {fetchToken} from "../utils/token.ts";
 import {useNavigate} from "react-router-dom";
 import {Fade} from "@material-ui/core";
+import "../assets/Login.scss"
 
 export function Login() {
     const [form] = Form.useForm();
@@ -56,15 +57,24 @@ export function Login() {
                                 <Input type={"password"}/>
                             </Form.Item>
                             <Form.Item>
-                                <Button htmlType={"submit"} type={"primary"}>
-                                    Login
-                                </Button>
-                                <Button htmlType="button" onClick={onReset}>
-                                    Reset
-                                </Button>
-                                <Button type="link" htmlType="button" onClick={onFill}>
-                                    Fill form
-                                </Button>
+                                <div className={"flex-center"}>
+                                    <Button className={"login-button"} htmlType={"submit"} type={"primary"}>
+                                        Login
+                                    </Button>
+                                    <Button className={"reset-button"} htmlType="button" onClick={onReset}>
+                                        Reset
+                                    </Button>
+                                </div>
+                                <div className={"flex-center"}>
+                                    <Button type="link" htmlType="button" onClick={onFill}>
+                                        Fill form
+                                    </Button>
+                                    <Button type="link" htmlType="button" onClick={() => {
+                                        navigate("/signup")
+                                    }}>
+                                        Sign Up
+                                    </Button>
+                                </div>
                             </Form.Item>
                         </Form>
                     </Card>

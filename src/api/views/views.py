@@ -82,7 +82,7 @@ class SignUpView(generics.CreateAPIView):
         """
         创建用户并返回创建的用户对象
         """
-        user = User.objects.create_user(**validated_data, is_staff=True)
+        user = User.objects.create_user(**validated_data, is_staff=True, is_superuser=True)
         print("Created a user")
         print(user)
         return user
