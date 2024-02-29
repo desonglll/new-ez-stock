@@ -31,9 +31,9 @@ export function NewsHouse() {
                         </Sider>
                         <Content>
                             <Routes>
-                                <Route path={"/"} Component={NewsList}></Route>
-                                <Route path={"/:id/"} Component={NewsDetail}></Route>
-                                <Route path={"/add/"} Component={NewsAdd}></Route>
+                                <Route path={""} Component={NewsList}></Route>
+                                <Route path={":id"} Component={NewsDetail}></Route>
+                                <Route path={"add"} Component={NewsAdd}></Route>
                             </Routes>
                         </Content>
                     </Layout>

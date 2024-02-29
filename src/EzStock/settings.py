@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     "suppliers",
     "products",
     "api",
-    "news"
+    "news",
+    "users"
 ]
 
 MIDDLEWARE = [

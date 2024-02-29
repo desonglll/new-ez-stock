@@ -6,7 +6,7 @@ import {WareHouse} from "./WareHouse.tsx";
 import {Welcome} from "./Welcome.tsx";
 import {Dashboard} from "./Dashboard.tsx";
 import {NewsHouse} from "./NewsHouse.tsx";
-import {User} from "./User.tsx";
+import {UserHouse} from "./UserHouse.tsx";
 import {SignUp} from "./SignUp.tsx";
 import {Route, Routes} from "react-router-dom";
 
@@ -25,7 +25,7 @@ export function WorkSpace() {
                 <Route path="warehouse/*" element={<WareHouse/>}/>
                 <Route path="dashboard/*" element={<Dashboard/>}/>
                 <Route path="news/*" element={<NewsHouse/>}/>
-                <Route path="user/*" element={<User/>}/>
+                <Route path="userhouse/*" element={<UserHouse/>}/>
                 <Route path="about/*" element={<Welcome/>}/>
                 <Route path="signup" element={<SignUp/>}/>
             </Routes>

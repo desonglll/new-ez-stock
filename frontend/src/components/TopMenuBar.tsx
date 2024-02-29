@@ -20,7 +20,7 @@ const items: MenuProps["items"] = [
     },
     {
         label: "User",
-        key: "/workspace/user",
+        key: "/workspace/userhouse/user/list",
         icon: <FaRegCircleUser/>,
     },
     {

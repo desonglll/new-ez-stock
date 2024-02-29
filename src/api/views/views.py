@@ -84,7 +84,6 @@ class SignUpView(generics.CreateAPIView):
         """
         user = User.objects.create_user(**validated_data, is_staff=True, is_superuser=True)
         print("Created a user")
-        print(user)
         return user
 
     def perform_create(self, serializer):

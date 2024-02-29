@@ -62,3 +62,18 @@ export interface News {
     pub_date: string,
     title: string,
 }
+
+export interface User {
+    date_joined: string,
+    email: string,
+    first_name: string,
+    groups: [],
+    id: number,
+    is_active: boolean,
+    is_staff: boolean,
+    is_superuser: boolean,
+    last_login: string,
+    last_name: string,
+    user_permissions: [],
+    username: string
+}

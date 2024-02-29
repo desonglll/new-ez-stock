@@ -24,8 +24,8 @@ function getItem(
 
 const items: MenuProps["items"] = [
     getItem("News", "sub1", <HiTemplate/>, [
-        getItem("News List", "/news"),
-        getItem("News Add", "/news/add"),
+        getItem("News List", "/workspace/news"),
+        getItem("News Add", "/workspace/news/add"),
     ]),
 
 ];
