@@ -4,6 +4,7 @@ import {Layout} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Content} from "antd/es/layout/layout";
 import {Route, Routes} from "react-router-dom";
+import {PermissionList} from "./users/PermissionList.tsx";
 
 export function UserHouse() {
     return (
@@ -17,6 +18,7 @@ export function UserHouse() {
                 <Content>
                     <Routes>
                         <Route path={"/user/list"} element={<UserList/>}/>
+                        <Route path={"/permission/list"} element={<PermissionList/>}/>
                     </Routes>
                 </Content>
             </Layout>

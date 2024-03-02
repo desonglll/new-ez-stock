@@ -67,7 +67,7 @@ export function NewsList() {
     }, []);
     const handleAdd = () => {
         console.log("Click")
-        navigate("/news/add/")
+        navigate("/workspace/news/add")
     }
     return (
         <>

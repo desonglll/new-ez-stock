@@ -9,5 +9,5 @@ class UserListView(generics.ListAPIView):
 
 
 class UserPermissionView(generics.ListAPIView):
-    queryset = Permission.objects.all()
+    queryset = Permission.objects.all().order_by('id')
     serializer_class = UserPermissionSerializer

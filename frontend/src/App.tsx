@@ -5,6 +5,7 @@ import './App.css';
 import {WorkSpace} from "./pages/WorkSpace.tsx";
 import {Welcome} from "./pages/Welcome.tsx";
 import {SignUp} from "./pages/SignUp.tsx";
+import {About} from "./pages/About.tsx";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/welcome" element={<Welcome/>}/>
+                    <Route path="/about" element={<About/>}/>
                     <Route path="/" element={<Welcome/>}/>
                 </Routes>
             </Router>
