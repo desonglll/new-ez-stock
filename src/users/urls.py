@@ -15,5 +15,5 @@ from .views import UserListView, UserPermissionView
 
 urlpatterns = [
     path("", UserListView.as_view()),
-    path("permissions/", UserPermissionView.as_view())
+    path("permissions/", UserPermissionView.as_view()),
 ]

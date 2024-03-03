@@ -61,7 +61,7 @@ class ProductManager(models.Manager):
 
 class Product(models.Model):
     """Represents a product in the inventory."""
-    user = models.OneToOneField(User, default=1, null=True, on_delete=models.SET_NULL, verbose_name='谁可见')
+    user = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL, verbose_name='谁可见')
 
     # 基本信息
     name = models.CharField(max_length=255, verbose_name='产品名称')
