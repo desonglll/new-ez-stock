@@ -28,3 +28,4 @@ export const get_permissions = async (limit: number = 10, offset: number = 0) =>
         console.log(e)
     }
 }
+

@@ -24,6 +24,8 @@ export interface Product {
     status: string;
     public: boolean;
     edit_url: string; //#
+    user: number;
+    username: string
 }
 
 export interface Supplier {

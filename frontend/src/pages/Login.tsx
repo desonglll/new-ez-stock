@@ -15,13 +15,17 @@ export function Login() {
         fetchToken(val.username, val.password)
             .then((data: {
                 refresh: string;
-                access: string
+                access: string;
+                username: string;
+                user_id: number
             }) => {
                 console.log("refresh: ", data.refresh);
                 console.log("access: ", data.access);
                 localStorage.setItem("refresh", data["refresh"]);
                 localStorage.setItem("access", data["access"]);
                 localStorage.setItem("is_login", "true");
+                localStorage.setItem("username", data["username"]);
+                localStorage.setItem("user_id", String(data["user_id"]));
             })
             .then(() => {
                 navigate("/workspace/warehouse");
