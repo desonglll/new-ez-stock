@@ -16,7 +16,7 @@ export const CategoryList = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const handleEdit = (event: Category) => {
         console.log(event);
-        navigate(`/warehouse/categories/${event.pk}`);
+        navigate(`/workspace/warehouse/categories/${event.pk}`);
     };
     const handleDelete = (event: Category) => {
         console.log(event);

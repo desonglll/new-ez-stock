@@ -32,6 +32,7 @@ const items: MenuProps["items"] = [
     getItem("Suppliers", "/workspace/warehouse/suppliers", <FaPersonHiking/>),
     getItem("Categories", "categories", <BiCategory/>,
         [
+            getItem("List", "/workspace/warehouse/categories", <BiCategory/>),
             getItem("Parents", "/workspace/warehouse/categories/parents", <BiCategory/>),
             getItem("SubCate", "/workspace/warehouse/categories/sub", <BiCategory/>)
         ]

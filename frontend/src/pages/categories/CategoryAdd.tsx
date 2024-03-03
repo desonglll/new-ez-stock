@@ -44,7 +44,7 @@ export const CategoryAdd = () => {
                 duration: 1.5,
             })
             .then(() => {
-                navigate("/warehouse/categories");
+                navigate("/workspace/warehouse/categories");
             });
     };
     return (

@@ -24,7 +24,7 @@ export const AttrEdit = () => {
                 duration: 1.5,
             })
             .then(() => {
-                navigate("/products-attr");
+                navigate("/workspace/warehouse/products/products-attr");
             });
     };
     useEffect(() => {

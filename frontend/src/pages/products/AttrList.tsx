@@ -42,7 +42,7 @@ export const AttrList = () => {
 
 
     const handleEdit = (record: ProductAttribute) => {
-        navigate(`/warehouse/products-attr/${record.pk}/`)
+        navigate(`/workspace/warehouse/products/products-attr/${record.pk}/`)
     }
     const handleDelete = (record: ProductAttribute) => {
         console.log(record)
@@ -95,7 +95,7 @@ export const AttrList = () => {
                             }}
                             placement={"right"}
                         >
-                            <AttrAdd/>
+                            <AttrAdd drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} fetchData={fetchData}/>
                         </Drawer>
                     </Card>
                 </Fade>

@@ -3,8 +3,16 @@ import {ProductAttribute} from "../utils/models.ts";
 import axios from "axios";
 import {get_headers} from "../utils/basic.ts";
 import {useNavigate} from "react-router-dom";
+import React from "react";
 
-export const AttrAdd = () => {
+interface AttrAddProps {
+    drawerOpen: boolean;
+    setDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    fetchData: () => void
+}
+
+export const AttrAdd: React.FC<AttrAddProps> = ({drawerOpen, setDrawerOpen, fetchData}) => {
+    const [form] = Form.useForm();
     const [messageApi, contextHolder] = message.useMessage();
     const navigate = useNavigate();
     const handleSubmit = (data: ProductAttribute) => {
@@ -16,6 +24,7 @@ export const AttrAdd = () => {
             })
             .then((res) => {
                 console.log(res);
+
             });
         success();
     };
@@ -27,13 +36,17 @@ export const AttrAdd = () => {
                 duration: 1.5,
             })
             .then(() => {
-                navigate("/warehouse/products-attr");
-            });
+                setDrawerOpen(!drawerOpen);
+                fetchData()
+                navigate("/workspace/warehouse/products/products-attr");
+            }).then(() => {
+            form.resetFields()
+        });
     };
     return (
         <>
             {contextHolder}
-            <Form labelCol={{span: 9}} onFinish={(data) => handleSubmit(data)}>
+            <Form labelCol={{span: 9}} onFinish={(data) => handleSubmit(data)} form={form}>
                 <div
                     style={{
                         margin: 20,

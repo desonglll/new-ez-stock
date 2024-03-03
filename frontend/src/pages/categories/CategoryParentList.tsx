@@ -14,7 +14,7 @@ export function CategoryParentList() {
     const [loading, setLoading] = useState(true)
     const handleEdit = (event: Category) => {
         console.log(event);
-        navigate(`/warehouse/categories/${event.key}`);
+        navigate(`/workspace/warehouse/categories/${event.key}`);
     };
     const handleDelete = (event: Category) => {
         console.log(event);
@@ -88,7 +88,7 @@ export function CategoryParentList() {
                             <Button
                                 style={{marginBottom: 16}}
                                 onClick={() => {
-                                    navigate("/warehouse/categories/add");
+                                    navigate("/workspace/warehouse/categories/add");
                                 }}
                             >
                                 Add
