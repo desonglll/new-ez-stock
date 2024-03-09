@@ -2,25 +2,12 @@ import {Button, Layout} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Content,} from "antd/es/layout/layout";
 import {ProductSideBar} from "../components/ProductSideBar.tsx";
-import {ProductList} from "./products/ProductList.tsx";
 import {useEffect, useState} from "react";
-import {Route, Routes, useNavigate} from "react-router-dom";
-import {Dashboard} from "./Dashboard.tsx";
-import {ProductAnalyze} from "./products/ProductAnalyze.tsx";
-import {SupplierList} from "./suppliers/SupplierList.tsx";
-import {SupplierEdit} from "./suppliers/SupplierEdit.tsx";
-import {SupplierAdd} from "./suppliers/SupplierAdd.tsx";
-import {ComingSoon} from "./ComingSoon.tsx";
-import {CategoryList} from "./categories/CategoryList.tsx";
-import {CategoryEdit} from "./categories/CategoryEdit.tsx";
-import {CategoryAdd} from "./categories/CategoryAdd.tsx";
-import {AttrList} from "./products/AttrList.tsx";
-import {AttrEdit} from "./products/AttrEdit.tsx";
-import {AttrAdd} from "../components/AttrAdd.tsx";
+import {useNavigate} from "react-router-dom";
+
 import {MdTableRows} from "react-icons/md";
-import {CategoryParentList} from "./categories/CategoryParentList.tsx";
-import {CategorySubList} from "./categories/CategorySubList.tsx";
 import {Fade, Grow,} from "@material-ui/core";
+import {WareHouseRoutes} from "../routes/WareHouseRoutes.tsx";
 
 export function WareHouse() {
     const [collapsed, setCollapsed] = useState(false);
@@ -62,24 +49,7 @@ export function WareHouse() {
                             <Grow in={true} style={{transformOrigin: '0 0 0'}}
                                   {...({timeout: 1000})}>
                                 <Content>
-                                    <Routes>
-                                        <Route path={"/"} Component={ProductAnalyze}></Route>
-                                        <Route path={"/coming"} Component={ComingSoon}></Route>
-                                        <Route path={"/dashboard"} Component={Dashboard}></Route>
-                                        <Route path={"/products/list"} Component={ProductList}></Route>
-                                        <Route path={"/products/analyze"} Component={ProductAnalyze}></Route>
-                                        <Route path={"/products/products-attr"} Component={AttrList}></Route>
-                                        <Route path={"/products/products-attr/:pk"} Component={AttrEdit}></Route>
-                                        <Route path={"/products/products-attr/add"} Component={AttrAdd}></Route>
-                                        <Route path={"/suppliers"} Component={SupplierList}></Route>
-                                        <Route path={"/suppliers/:pk"} Component={SupplierEdit}></Route>
-                                        <Route path={"/suppliers/add"} Component={SupplierAdd}></Route>
-                                        <Route path={"/categories"} Component={CategoryList}></Route>
-                                        <Route path={"/categories/:pk"} Component={CategoryEdit}></Route>
-                                        <Route path={"/categories/add"} Component={CategoryAdd}></Route>
-                                        <Route path={"/categories/parents"} Component={CategoryParentList}></Route>
-                                        <Route path={"/categories/sub"} Component={CategorySubList}></Route>
-                                    </Routes>
+                                    <WareHouseRoutes/>
                                 </Content>
                             </Grow>
                         </Layout>

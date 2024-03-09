@@ -57,7 +57,6 @@ class ProductInfoAPIView(generics.GenericAPIView):
                 "name": item.name,
                 "supplier_product_count": item.product_count
             })
-        print(supplier_info)
 
         # 构建结果
         result_data = {

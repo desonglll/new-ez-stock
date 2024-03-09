@@ -26,7 +26,7 @@ export function SignUp() {
 
             console.log(res.data);
             info();
-            navigate("/login");
+            navigate("success")
         } catch (error) {
             // 处理错误
             console.error("Error during signup:", error);

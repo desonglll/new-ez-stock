@@ -1,13 +1,12 @@
-// WorkSpace.tsx
 import {Layout} from "antd";
 import {Header} from "antd/es/layout/layout";
 import {TopMenuBar} from "../components/TopMenuBar.tsx";
-import {WareHouse} from "./WareHouse.tsx";
-import {Welcome} from "./Welcome.tsx";
-import {Dashboard} from "./Dashboard.tsx";
-import {NewsHouse} from "./NewsHouse.tsx";
-import {UserHouse} from "./UserHouse.tsx";
-import {SignUp} from "./SignUp.tsx";
+import {WareHouse} from "../pages/WareHouse.tsx";
+import {Welcome} from "../pages/Welcome.tsx";
+import {Dashboard} from "../pages/Dashboard.tsx";
+import {NewsHouse} from "../pages/NewsHouse.tsx";
+import {UserHouse} from "../pages/UserHouse.tsx";
+import {SignUp} from "../pages/SignUp.tsx";
 import {Route, Routes} from "react-router-dom";
 
 export function WorkSpace() {
