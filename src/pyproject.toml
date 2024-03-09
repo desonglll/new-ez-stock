@@ -52,6 +52,7 @@ six = "1.16.0"
 sqlparse = "0.4.4"
 urllib3 = "2.1.0"
 watchdog = "3.0.0"
+faker = "^24.1.0"
 
 [build-system]
 requires = ["poetry-core"]
