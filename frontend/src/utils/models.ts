@@ -39,13 +39,14 @@ export interface Supplier {
 }
 
 export interface Category {
+    is_children: boolean;
     key: React.Key;
     pk: number;
     name: string;
     user: number;
     description: string;
-    parent: number;
-    parent_name: string
+    parent: number | null;
+    parent_name: string | null
 }
 
 export interface ProductAttribute {

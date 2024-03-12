@@ -17,7 +17,7 @@ export const SupplierList = () => {
 
     const handleEdit = (event: Supplier) => {
         console.log(event);
-        navigate(`/suppliers/${event.pk}`);
+        navigate(`/workspace/warehouse/suppliers/${event.pk}`);
     };
     const handleDelete = (event: Supplier) => {
         console.log(event);

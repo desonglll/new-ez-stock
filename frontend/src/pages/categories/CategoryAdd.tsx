@@ -1,4 +1,4 @@
-import {Button, Card, Col, Form, Input, message, Row, Select} from "antd";
+import {Button, Card, Col, Form, Input, message, Row, Select, Switch} from "antd";
 import {Category} from "../../utils/models.ts";
 import axios from "axios";
 import {get_headers} from "../../utils/basic.ts";
@@ -10,6 +10,7 @@ export const CategoryAdd = () => {
     const navigate = useNavigate();
     const instance = axios.create()
     const [parentSelections, setParentSelections] = useState([]);
+    const [isChild, setIsChild] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             const parentData = await instance.get("api/categories/get_parent/")
@@ -24,7 +25,11 @@ export const CategoryAdd = () => {
         fetchData().then()
     }, []);
     const handleSubmit = (data: Category) => {
+        if (!data.is_children) {
+            data.parent = null
+        }
         console.log(data);
+
         const instance = axios.create();
         instance
             .post("api/categories/", data, {
@@ -49,7 +54,10 @@ export const CategoryAdd = () => {
     return (
         <>
             {contextHolder}
-            <Form labelCol={{span: 9}} onFinish={(data) => handleSubmit(data)}>
+            <Form labelCol={{span: 9}} onFinish={(data) => handleSubmit(data)}
+                  initialValues={{
+                      is_children: false
+                  }}>
                 <div
                     style={{
                         margin: 20,
@@ -79,25 +87,28 @@ export const CategoryAdd = () => {
                                 </Form.Item>
                             </Col>
                         </Row>
-                        {/*<Row>*/}
-                        {/*    <Col span={18}>*/}
-                        {/*        <Form.Item name={"is_parent"} label={"Is Parent"}>*/}
-                        {/*            <Switch onChange={() => {*/}
-                        {/*                setIsParent(!isParent)*/}
-                        {/*            }}/>*/}
-                        {/*        </Form.Item>*/}
-                        {/*    </Col>*/}
-                        {/*</Row>*/}
-
                         <Row>
                             <Col span={18}>
-                                <Form.Item name={"parent"} label={"所属分类"}>
-                                    <Select
-                                        options={parentSelections}
-                                    />
+                                <Form.Item name={"is_children"} label={"是否有所属分类"}>
+                                    <Switch onChange={() => {
+                                        setIsChild(!isChild)
+                                    }}/>
                                 </Form.Item>
                             </Col>
                         </Row>
+                        {isChild ? (
+                            <Row>
+                                <Col span={18}>
+                                    <Form.Item name={"parent"} label={"所属分类"}>
+                                        <Select
+                                            options={parentSelections}
+                                        />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        ) : (
+                            <div></div>
+                        )}
 
 
                         <Row>

@@ -141,7 +141,6 @@ def insert_products():
 
 
 if __name__ == "__main__":
-    # insert_suppliers()
-    # insert_products()
-    insert_categories()
+    insert_suppliers()
+    insert_products()
     pass
