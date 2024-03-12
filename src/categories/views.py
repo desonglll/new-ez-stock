@@ -158,3 +158,10 @@ def get_sub_categories(request):
     serializer = CategorySerializer(data, many=True)
     result = Result(status="success", message="CategorySub", data=serializer.data)
     return JsonResponse(result.to_json(), status=200)
+
+
+def get_all_categories(request):
+    data = Category.objects.all()
+    serializer = CategorySerializer(data, many=True)
+    result = Result(status="success", message="All Categories", data=serializer.data)
+    return JsonResponse(result.to_json(), status=200)

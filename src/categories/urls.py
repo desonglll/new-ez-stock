@@ -17,5 +17,6 @@ urlpatterns = [
     path('<int:pk>/update/', views.category_update_view, name="category_update"),
     path('<int:pk>/delete/', views.category_destroy_view, name="category_destroy"),
     path('get_parent/', views.get_parent_categories),
-    path('get_sub/', views.get_sub_categories)
+    path('get_sub/', views.get_sub_categories),
+    path('get_all/', views.get_all_categories)
 ]

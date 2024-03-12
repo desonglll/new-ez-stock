@@ -1,4 +1,4 @@
-import {Button, Card, Col, Form, Input, message, Row, Select, Switch} from "antd";
+import {Button, Card, Col, Form, Input, message, Row, Select} from "antd";
 import {Category} from "../../utils/models.ts";
 import axios from "axios";
 import {get_headers} from "../../utils/basic.ts";
@@ -10,7 +10,6 @@ export const CategoryAdd = () => {
     const navigate = useNavigate();
     const instance = axios.create()
     const [parentSelections, setParentSelections] = useState([]);
-    const [isParent, setIsParent] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             const parentData = await instance.get("api/categories/get_parent/")
@@ -64,7 +63,7 @@ export const CategoryAdd = () => {
                             <Col span={18}>
                                 <Form.Item
                                     name={"name"}
-                                    label={"Name"}
+                                    label={"分类名称"}
                                     rules={[
                                         {required: true, message: "Please enter the name!"},
                                     ]}
@@ -75,38 +74,36 @@ export const CategoryAdd = () => {
                         </Row>
                         <Row>
                             <Col span={18}>
-                                <Form.Item name={"description"} label={"Description"}>
+                                <Form.Item name={"description"} label={"分类描述"}>
                                     <Input/>
                                 </Form.Item>
                             </Col>
                         </Row>
+                        {/*<Row>*/}
+                        {/*    <Col span={18}>*/}
+                        {/*        <Form.Item name={"is_parent"} label={"Is Parent"}>*/}
+                        {/*            <Switch onChange={() => {*/}
+                        {/*                setIsParent(!isParent)*/}
+                        {/*            }}/>*/}
+                        {/*        </Form.Item>*/}
+                        {/*    </Col>*/}
+                        {/*</Row>*/}
+
                         <Row>
                             <Col span={18}>
-                                <Form.Item name={"is_parent"} label={"Is Parent"}>
-                                    <Switch onChange={() => {
-                                        setIsParent(!isParent)
-                                    }}/>
+                                <Form.Item name={"parent"} label={"所属分类"}>
+                                    <Select
+                                        options={parentSelections}
+                                    />
                                 </Form.Item>
                             </Col>
                         </Row>
-                        {!isParent ? (
-                            <Row>
-                                <Col span={18}>
-                                    <Form.Item name={"parent"} label={"Parent Name"}>
-                                        <Select
-                                            options={parentSelections}
-                                        />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
 
-                        ) : (
-                            <div></div>
-                        )}
+
                         <Row>
                             <Col>
                                 <Form.Item>
-                                    <Button htmlType={"submit"}>Add</Button>
+                                    <Button htmlType={"submit"}>添加</Button>
                                 </Form.Item>
                             </Col>
                         </Row>
