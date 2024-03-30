@@ -35,4 +35,4 @@ jobs:
           git config --local user.name "GitHub Action"
           git add .
           git commit -am "Run Linec"
-          git push
+          git push https://${{ secrets.PERSONAL }}@github.com/desonglll/new-ez-stock.git
