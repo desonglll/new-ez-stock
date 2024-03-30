@@ -40,4 +40,4 @@ jobs:
           git config --global user.name "GitHub Action"
           git add .
           git commit -am "Run Linec"
-          git push git@github.com/desonglll/new-ez-stock.git
+          git push git@github.com:desonglll/new-ez-stock.git
