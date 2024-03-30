@@ -18,6 +18,7 @@ from products.serializers import ProductSerializer
 from products.models import Product, ProductAttribute
 from rest_framework import generics, status
 from api.models import Result
+from utils.timing import get_time
 
 
 class ProductListCreateAPIView(
@@ -31,6 +32,7 @@ class ProductListCreateAPIView(
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+    @get_time
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset().order_by("-pk"))  # Order by pk descending
 

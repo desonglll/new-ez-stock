@@ -1,0 +1,28 @@
+name: Run Linec
+
+on:
+  push:
+    branches:
+      - main # 您需要根据实际情况调整分支名称
+
+jobs:
+  run_linec:
+    runs-on: ubuntu-latest # 选择您希望的操作系统
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14" # 选择您想要的 Node.js 版本
+
+      - name: Install linec globally
+        run: |
+          npm install -g linec
+          # 或者如果您更喜欢使用 cnpm，您可以使用以下命令：
+          # cnpm install -g linec
+
+      - name: Run linec -o
+        run: linec -o
