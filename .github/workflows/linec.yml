@@ -26,3 +26,10 @@ jobs:
 
       - name: Run linec -o
         run: linec -o
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Run Linec"
+          git push
