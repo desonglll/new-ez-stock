@@ -27,12 +27,17 @@ jobs:
       - name: Run linec -o
         run: linec -o
 
-      - name: Commit and Push Changes
+      - name: Configure SSH key
         run: |
-          pwd
-          ls
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.PERSONAL }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
           git add .
           git commit -am "Run Linec"
-          git push https://${{ secrets.PERSONAL }}@github.com/desonglll/new-ez-stock.git
+          git push git@github.com/desonglll/new-ez-stock.git
